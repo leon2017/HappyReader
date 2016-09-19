@@ -7,3 +7,12 @@
 /build
 /captures
 .externalNativeBuild
+libs/
+src/main/java/com/leonwang/app/chinashop/adapter/
+src/main/java/com/leonwang/app/chinashop/base/
+src/main/java/com/leonwang/app/chinashop/entity/
+src/main/java/com/leonwang/app/chinashop/net/
+src/main/java/com/leonwang/app/chinashop/rx/
+src/main/java/com/leonwang/app/chinashop/ui/
+src/main/java/com/leonwang/app/chinashop/widget/
+src/main/res/drawable/
