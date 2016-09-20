@@ -22,6 +22,7 @@ import butterknife.BindView;
 public class MainActivity extends RxAppCompatBaseActivity {
 
 
+    //简单的测试
     @BindView(R.id.appCompatTextView)
     AppCompatTextView mAppCompatTextView;
     @BindView(R.id.button)
