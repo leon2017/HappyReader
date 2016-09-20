@@ -45,15 +45,9 @@ public abstract class RxLazyBaseFragment extends RxFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mParentView == null) {
-            this.mInflater = inflater;
-            mParentView = inflater.inflate(getLayoutResId(), container, false);
-        } else {
-            ViewGroup parent = (ViewGroup) mParentView.getParent();
-            if (parent != null) {
-                parent.removeView(mParentView);
-            }
-        }
+
+        this.mInflater = inflater;
+        mParentView = inflater.inflate(getLayoutResId(), container, false);
         mActivity = getSupportActivity();
         Log.d(TAG, ":onCreateView");
         return mParentView;
