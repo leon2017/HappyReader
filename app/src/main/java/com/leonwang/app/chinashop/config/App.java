@@ -40,6 +40,8 @@ public class App extends Application {
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                         .build());
+        //启动eventbus的加速模式
+//        EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
     }
 
     public static App getInstance() {

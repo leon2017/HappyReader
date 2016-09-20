@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">ChinaShop</string>
     <string name="versionname_unknown">版本名称错误</string>
+    <string name="progressdiaog">数据加载中，请稍后...</string>
+    <string name="reload">重新加载</string>
 </resources>

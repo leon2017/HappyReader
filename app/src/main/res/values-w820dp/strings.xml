@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="progressdiaog">数据加载中，请稍后...</string>
+</resources>
