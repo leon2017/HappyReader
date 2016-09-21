@@ -1,11 +1,24 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <!--沉浸式状态栏-->
+       <!-- <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>-->
+    </style>
+
+    <!-- Global Activity's Animation Theme -->
+    <style name="AppTheme" parent="BaseTheme">
+        <item name="android:windowBackground">@color/color_H1</item>
+        <item name="android:activityOpenEnterAnimation">@anim/anim_right_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/anim_left_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/anim_left_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/anim_right_exit</item>
     </style>
 
 </resources>
