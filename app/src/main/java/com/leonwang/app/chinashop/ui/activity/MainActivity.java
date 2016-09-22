@@ -1,8 +1,11 @@
-package com.leonwang.app.chinashop.ui;
+package com.leonwang.app.chinashop.ui.activity;
+
 
 import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
@@ -12,6 +15,11 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.leonwang.app.chinashop.R;
 import com.leonwang.app.chinashop.base.RxAppCompatBaseActivity;
+import com.leonwang.app.chinashop.ui.fragment.DeveloperFragment;
+import com.leonwang.app.chinashop.ui.fragment.NewsFragment;
+import com.leonwang.app.chinashop.ui.fragment.VideoFragment;
+import com.leonwang.app.chinashop.ui.fragment.ZhihuFragment;
+import com.leonwang.app.chinashop.utils.LogUtils;
 
 import butterknife.BindView;
 
@@ -29,7 +37,11 @@ public class MainActivity extends RxAppCompatBaseActivity {
     @BindView(R.id.activity_main)
     LinearLayout mActivityMain;
 
-
+    //fragment
+    private NewsFragment mNewsFragment;
+    private VideoFragment mVideoFragment;
+    private ZhihuFragment mZhihuFragment;
+    private DeveloperFragment mDeveloperFragment;
 
     private String TAB[] = {"资讯", "视频", "知乎", "开发者"};
     private String TITLE;
@@ -61,8 +73,9 @@ public class MainActivity extends RxAppCompatBaseActivity {
                 .setFirstSelectedPosition(0)
                 .initialise();
         mBottomNavigationBar.setTabSelectedListener(new MyTabListener());
-
+        setDefaultFragment();
     }
+
 
     @Override
     protected void initToolBar() {
@@ -77,6 +90,14 @@ public class MainActivity extends RxAppCompatBaseActivity {
             mActionBar.setDisplayUseLogoEnabled(false);
             mActionBar.setDisplayShowTitleEnabled(true);
         }
+    }
+
+    private void setDefaultFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        mNewsFragment = NewsFragment.newInstance("资讯");
+        transaction.replace(R.id.layFrame, mNewsFragment);
+        transaction.commit();
     }
 
     @Override
@@ -94,18 +115,38 @@ public class MainActivity extends RxAppCompatBaseActivity {
 
         @Override
         public void onTabSelected(int position) {
+            LogUtils.d("onTabSelected() called with: " + "position = [" + position + "]");
             TITLE = TAB[position];
             mToolBarBG = TAB_COLOR[position];
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
             switch (position) {
                 case 0://资讯
+                    if (mNewsFragment == null) {
+                        mNewsFragment = NewsFragment.newInstance(TAB[0]);
+                    }
+                    transaction.replace(R.id.layFrame, mNewsFragment);
                     break;
                 case 1://视频
+                    if (mVideoFragment == null) {
+                        mVideoFragment = VideoFragment.newInstance(TAB[1]);
+                    }
+                    transaction.replace(R.id.layFrame, mVideoFragment);
                     break;
                 case 2://知乎
+                    if (mZhihuFragment == null) {
+                        mZhihuFragment = ZhihuFragment.newInstance(TAB[2]);
+                    }
+                    transaction.replace(R.id.layFrame, mZhihuFragment);
                     break;
                 case 3://开发
+                    if (mDeveloperFragment == null) {
+                        mDeveloperFragment = DeveloperFragment.newInstance(TAB[3]);
+                    }
+                    transaction.replace(R.id.layFrame, mDeveloperFragment);
                     break;
             }
+            transaction.commit();
             updateToolbar();
         }
 
