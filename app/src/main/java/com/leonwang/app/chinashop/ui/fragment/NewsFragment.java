@@ -9,6 +9,7 @@ import com.leonwang.app.chinashop.R;
 import com.leonwang.app.chinashop.adapter.NewsPagerAdapter;
 import com.leonwang.app.chinashop.base.RxLazyBaseFragment;
 import com.leonwang.app.chinashop.utils.ConstantUtils;
+import com.leonwang.app.chinashop.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +57,16 @@ public class NewsFragment extends RxLazyBaseFragment {
             if (eNewsTypes.length > 0) {
                 for (int i = 0; i < eNewsTypes.length; i++) {
                     mTabTitleList.add(eNewsTypes[i].getTitle());
+                    LogUtils.d("-----------顶部tab集合---------------"+mTabTitleList.get(i));
                 }
             }
         }
 
-        if (mNewsPagerAdapter == null) {
+       /* if (mNewsPagerAdapter == null) {
             mNewsPagerAdapter = new NewsPagerAdapter(getChildFragmentManager(),mTabTitleList);
-        }
+        }*/
 
+        mNewsPagerAdapter = new NewsPagerAdapter(getChildFragmentManager(),mTabTitleList);
         mViewPager.setAdapter(mNewsPagerAdapter);
         mSlidingTabs.setViewPager(mViewPager);
     }
