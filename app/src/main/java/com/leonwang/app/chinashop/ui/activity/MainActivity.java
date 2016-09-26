@@ -51,6 +51,7 @@ public class MainActivity extends RxAppCompatBaseActivity {
             R.color.mediumslateblue};
     private int mToolBarBG = R.color.colorPrimary;
     private Bundle mSavedInstanceState;
+    private FragmentManager mFm;
 
     @Override
     protected int getLayoutId() {
@@ -118,34 +119,56 @@ public class MainActivity extends RxAppCompatBaseActivity {
             LogUtils.d("onTabSelected() called with: " + "position = [" + position + "]");
             TITLE = TAB[position];
             mToolBarBG = TAB_COLOR[position];
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
+            if (null == mFm) {
+                mFm = getSupportFragmentManager();
+            }
+            FragmentTransaction transaction = mFm.beginTransaction();
+            if (null == transaction) {
+                return;
+            }
             switch (position) {
                 case 0://资讯
+                    hideFragment(transaction);
                     if (mNewsFragment == null) {
                         mNewsFragment = NewsFragment.newInstance(TAB[0]);
+                        transaction.add(R.id.layFrame, mNewsFragment);
+                    } else {
+                        transaction.show(mNewsFragment);
                     }
-                    transaction.replace(R.id.layFrame, mNewsFragment);
+//                    transaction.replace(R.id.layFrame, mNewsFragment);
                     break;
                 case 1://视频
+                    hideFragment(transaction);
                     if (mVideoFragment == null) {
                         mVideoFragment = VideoFragment.newInstance(TAB[1]);
+                        transaction.add(R.id.layFrame, mVideoFragment);
+                    } else {
+                        transaction.show(mVideoFragment);
                     }
-                    transaction.replace(R.id.layFrame, mVideoFragment);
+//                    transaction.replace(R.id.layFrame, mVideoFragment);
                     break;
                 case 2://知乎
+                    hideFragment(transaction);
                     if (mZhihuFragment == null) {
                         mZhihuFragment = ZhihuFragment.newInstance(TAB[2]);
+                        transaction.add(R.id.layFrame, mZhihuFragment);
+                    } else {
+                        transaction.show(mZhihuFragment);
                     }
-                    transaction.replace(R.id.layFrame, mZhihuFragment);
+//                    transaction.replace(R.id.layFrame, mZhihuFragment);
                     break;
                 case 3://开发
+                    hideFragment(transaction);
                     if (mDeveloperFragment == null) {
                         mDeveloperFragment = DeveloperFragment.newInstance(TAB[3]);
+                        transaction.add(R.id.layFrame, mDeveloperFragment);
+                    } else {
+                        transaction.show(mDeveloperFragment);
                     }
-                    transaction.replace(R.id.layFrame, mDeveloperFragment);
+//                    transaction.replace(R.id.layFrame, mDeveloperFragment);
                     break;
             }
+            transaction.addToBackStack(null);
             transaction.commit();
             updateToolbar();
         }
@@ -171,5 +194,20 @@ public class MainActivity extends RxAppCompatBaseActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         this.mTintManager.setTintColor(this.getResources().getColor(mToolBarBG));
+    }
+
+    private void hideFragment(FragmentTransaction transaction) {
+        if (mNewsFragment != null) {
+            transaction.hide(mNewsFragment);
+        }
+        if (mVideoFragment != null) {
+            transaction.hide(mVideoFragment);
+        }
+        if (mZhihuFragment != null) {
+            transaction.hide(mZhihuFragment);
+        }
+        if (mDeveloperFragment != null) {
+            transaction.hide(mDeveloperFragment);
+        }
     }
 }

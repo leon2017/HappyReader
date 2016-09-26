@@ -15,12 +15,12 @@ public class ConstantUtils {
     /**
      * 加载失败显示的图片
      */
-    public static final int ERROR_IMAGE_ID = R.mipmap.ic_launcher;
+    public static final int ERROR_IMAGE_ID = R.drawable.loading_image;
 
     /**
      * 加载过程中显示的图片
      */
-    public static final int LOADING_IMAGE_ID = R.mipmap.ic_launcher;
+    public static final int LOADING_IMAGE_ID = R.drawable.loading_image;
 
     //聚合数据--新闻头条apikey
     public static final String NEWS_APIKEY = "5b379bc0fafcc419de5bcc0e8e8aeb13";

@@ -1,6 +1,7 @@
 package com.leonwang.app.chinashop.ui.fragment.itemFragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.leonwang.app.chinashop.R;
@@ -11,6 +12,7 @@ import com.leonwang.app.chinashop.entity.TopNewsEntity;
 import com.leonwang.app.chinashop.iml.SwipeItemCallback;
 import com.leonwang.app.chinashop.net.RetrofitHelper;
 import com.leonwang.app.chinashop.utils.ConstantUtils;
+import com.leonwang.app.chinashop.utils.LayoutHelper;
 import com.leonwang.app.chinashop.utils.LogUtils;
 import com.leonwang.app.chinashop.widget.SwipeRecyclerView;
 
@@ -43,7 +45,7 @@ public class NewsItemFragment extends RxLazyBaseFragment {
 
     //当前页数
     int curpageInt = 1;
-    //总页数 -----模拟测试 具体根据后台返回做判断
+    //总页数 -----模拟测试 具体根据接口返回做判断
     int totalPagerInt = 5;
 
     @Override
@@ -68,6 +70,9 @@ public class NewsItemFragment extends RxLazyBaseFragment {
 
     private void initData() {
 
+        RecyclerView mRecyclerView = mSwipeRecyclerView.getRecyclerView();
+        mRecyclerView.setLayoutManager(LayoutHelper.getLinearLayout(getApplicationContext()));
+        mRecyclerView.addItemDecoration(LayoutHelper.getHorizontalDivider_6(getApplicationContext()));
         mSwipeRecyclerView.setRefreshCallback(new RefreshCallback() {
             //下拉刷新
             @Override
