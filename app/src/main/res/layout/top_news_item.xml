@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="180dp"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_tab"
+        android:layout_width="70dp"
+        android:layout_height="20dp"
+        android:background="@color/mediumaquamarine"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:padding="@dimen/space_3"
+        android:singleLine="true"
+        android:text="兴趣标签"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize11sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_tab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="『生活家』"
+        android:textColor="@color/darkgrey"
+        android:textSize="11sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:layout_marginTop="@dimen/space_5"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_15"
+        android:paddingRight="@dimen/space_15">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/space_15"
+            android:layout_weight="4">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="2"
+                android:text="大王叫我来巡山大王叫我来巡山大王叫我来巡山大王叫我来巡山大王叫我来巡山"
+                android:textColor="#000"
+                android:textSize="@dimen/textSize16sp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title"
+                android:layout_marginTop="@dimen/space_10"
+                android:ellipsize="end"
+                android:lines="4"
+                android:text="a RecyclerView that implements pullrefresh , loadingmore and header featrues.you can use it like a standard RecyclerView. you don't need to implement a special adapter ."
+                android:textSize="@dimen/textSize12sp"
+                android:textColor="@color/color_H3"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/lightgray"
+                />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_item"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/space_15"
+        android:gravity="center_vertical"
+        android:text="时间：2016-07-29"
+        android:textSize="@dimen/textSize12sp"
+        android:textColor="@color/color_H3"
+        />
+
+
+</LinearLayout>

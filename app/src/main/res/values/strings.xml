@@ -3,4 +3,33 @@
     <string name="versionname_unknown">版本名称错误</string>
     <string name="progressdiaog">数据加载中，请稍后...</string>
     <string name="reload">重新加载</string>
+
+
+
+    <string name="network_unable">网络不可用</string>
+    <string name="sd_unable">SD卡不可用</string>
+
+    <string name="set">设置</string>
+    <string name="hint_search_default">搜索</string>
+    <string name="action_search">搜索</string>
+
+    <string name="permission_title">权限申请说明</string>
+    <string name="permission_refuse">请点击"设置"-"权限"-打开所需权限.\n开启后点击2次后退按钮,即可返回应用.</string>
+
+    <string name="app_update_progress">正在下载&#8230;</string>
+    <string name="app_update_complete">下载成功，点击安装。</string>
+    <string name="app_update_error">下载失败，建议在wifi下更新！</string>
+    <string name="app_update_retry">点击重试</string>
+
+    <string name="image_download_success">图片已下载到本地相册</string>
+    <string name="image_download_failed">图片下载失败</string>
+
+    <string name="swipe_loading_more">加载更多&#8230;</string>
+    <string name="swipe_loading_error">网络不给力,点击重试</string>
+    <string name="swipe_def_error">网络神游了\n点击页面重新刷新</string>
+    <string name="swipe_def_sale">暂无数据\n换个搜索条件试试</string>
+
+    <string name="load_error_retry">加载失败，点击重试</string>
+
+
 </resources>

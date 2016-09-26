@@ -22,6 +22,8 @@ public class ConstantUtils {
      */
     public static final int LOADING_IMAGE_ID = R.mipmap.ic_launcher;
 
+    //聚合数据--新闻头条apikey
+    public static final String NEWS_APIKEY = "5b379bc0fafcc419de5bcc0e8e8aeb13";
 
     /**
      * 新闻头条页面相关数据

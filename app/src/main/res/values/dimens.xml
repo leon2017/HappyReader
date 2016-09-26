@@ -2,4 +2,60 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- 字体大小 -->
+    <dimen name="textSize10sp">10.0sp</dimen>
+    <dimen name="textSize11sp">11.0sp</dimen>
+    <dimen name="textSize12sp">12.0sp</dimen>
+    <dimen name="textSize13sp">13.0sp</dimen>
+    <dimen name="textSize14sp">14.0sp</dimen>
+    <dimen name="textSize15sp">15.0sp</dimen>
+    <dimen name="textSize16sp">16.0sp</dimen>
+    <dimen name="textSize17sp">17.0sp</dimen>
+    <dimen name="textSize18sp">18.0sp</dimen>
+    <dimen name="textSize19sp">19.0sp</dimen>
+    <dimen name="textSize20sp">20.0sp</dimen>
+    <dimen name="textSize21sp">21.0sp</dimen>
+    <dimen name="textSize28sp">28.0sp</dimen>
+    <dimen name="textSize29sp">29.0sp</dimen>
+    <dimen name="textSize30sp">30.0sp</dimen>
+    <dimen name="textSize45sp">45.0sp</dimen>
+    <dimen name="textSize55sp">55.0sp</dimen>
+
+    <!-- 间隔大小 -->
+    <dimen name="space_60">60.0dip</dimen>
+    <dimen name="space_55">55.0dip</dimen>
+    <dimen name="space_50">50.0dip</dimen>
+    <dimen name="space_40">40.0dip</dimen>
+    <dimen name="space_30">30.0dip</dimen>
+    <dimen name="space_29">29.0dip</dimen>
+    <dimen name="space_28">28.0dip</dimen>
+    <dimen name="space_27">27.0dip</dimen>
+    <dimen name="space_26">26.0dip</dimen>
+    <dimen name="space_25">25.0dip</dimen>
+    <dimen name="space_24">24.0dip</dimen>
+    <dimen name="space_23">23.0dip</dimen>
+    <dimen name="space_22">22.0dip</dimen>
+    <dimen name="space_21">21.0dip</dimen>
+    <dimen name="space_20">20.0dip</dimen>
+    <dimen name="space_19">19.0dip</dimen>
+    <dimen name="space_18">18.0dip</dimen>
+    <dimen name="space_17">17.0dip</dimen>
+    <dimen name="space_16">16.0dip</dimen>
+    <dimen name="space_15">15.0dip</dimen>
+    <dimen name="space_14">14.0dip</dimen>
+    <dimen name="space_13">13.0dip</dimen>
+    <dimen name="space_12">12.0dip</dimen>
+    <dimen name="space_11">11.0dip</dimen>
+    <dimen name="space_10">10.0dip</dimen>
+    <dimen name="space_9">9.0dip</dimen>
+    <dimen name="space_8">8.0dip</dimen>
+    <dimen name="space_7">7.0dip</dimen>
+    <dimen name="space_6">6.0dip</dimen>
+    <dimen name="space_5">5.0dip</dimen>
+    <dimen name="space_4">4.0dip</dimen>
+    <dimen name="space_3">3.0dip</dimen>
+    <dimen name="space_2">2.0dip</dimen>
+    <dimen name="space_1">1.0dip</dimen>
 </resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="coordinatorLayout" type="id"/>
+    <item name="appBarLayout" type="id"/>
+    <item name="toolbar" type="id"/>
+    <item name="atv_activity_title" type="id"/>
+
+    <item name="swipeRefreshLayout" type="id"/>
+    <item name="recyclerView" type="id"/>
+    <item name="swipeRecyclerView" type="id"/>
+
+</resources>

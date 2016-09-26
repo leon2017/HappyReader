@@ -45,6 +45,10 @@
     <color name= "color_H11">#9f9f9f</color>
 
 
+    <color name="blackLight">#999999</color>
+    <color name="blackMedium">#666666</color>
+    <color name="blackDark">#333333</color>
+    <color name="appBackground">#F0F0F0</color>
 
     <color name="red_fa4">#fa4141</color>
     <color name="black">#000000</color>

@@ -67,6 +67,7 @@ public class NewsFragment extends RxLazyBaseFragment {
         }*/
 
         mNewsPagerAdapter = new NewsPagerAdapter(getChildFragmentManager(),mTabTitleList);
+        mViewPager.setOffscreenPageLimit(8);
         mViewPager.setAdapter(mNewsPagerAdapter);
         mSlidingTabs.setViewPager(mViewPager);
     }

@@ -2,6 +2,7 @@ package com.leonwang.app.chinashop.net;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.leonwang.app.chinashop.config.App;
+import com.leonwang.app.chinashop.net.api.TopNewsService;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -9,6 +10,9 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * 当前类注释：retrofit帮助类
@@ -20,9 +24,32 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class RetrofitHelper {
 
+
     private static OkHttpClient mOkHttpClient;
 
+    //聚合数据base url
+    public static final String JUHE_BASE_URL = "http://v.juhe.cn/";
+
+
+    static{
+        initOkhttpClient();
+    }
+
+
+
+    //获取新闻头条api
+    public static TopNewsService getTopNewsApi() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(JUHE_BASE_URL)
+                .client(mOkHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        return retrofit.create(TopNewsService.class);
+    }
+
     private static void initOkhttpClient() {
+
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         if (mOkHttpClient == null) {
@@ -30,15 +57,15 @@ public class RetrofitHelper {
                 if (mOkHttpClient == null) {
                     //设置http缓存
                     Cache cache = new Cache(new File(App.getInstance()
-                                    .getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
+                            .getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
                     mOkHttpClient = new OkHttpClient.Builder()
                             .cache(cache)
                             .addInterceptor(interceptor)
                             .addNetworkInterceptor(new StethoInterceptor())
                             .retryOnConnectionFailure(true)
                             .connectTimeout(30, TimeUnit.SECONDS)
-                            .writeTimeout(20,TimeUnit.SECONDS)
-                            .readTimeout(20,TimeUnit.SECONDS)
+                            .writeTimeout(20, TimeUnit.SECONDS)
+                            .readTimeout(20, TimeUnit.SECONDS)
                             .build();
                 }
             }

@@ -21,4 +21,11 @@
         <item name="android:activityCloseExitAnimation">@anim/anim_right_exit</item>
     </style>
 
+
+    <style name="progressDrawable">
+        <item name="android:indeterminateDrawable">@drawable/custom_progress</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateDuration">2000</item>
+    </style>
+
 </resources>
