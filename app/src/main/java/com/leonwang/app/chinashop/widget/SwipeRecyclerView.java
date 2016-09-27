@@ -13,6 +13,8 @@ import com.leonwang.app.chinashop.adapter.RefreshCallback;
 import com.leonwang.app.chinashop.adapter.SwipeAdapter;
 import com.leonwang.app.chinashop.iml.SwipeRefreshCallback;
 
+import static com.leonwang.app.chinashop.R.id.recyclerView;
+
 
 /**
  * Author :LeonWang
@@ -30,20 +32,24 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
     private RefreshCallback mRefreshCallback;
     private SwipeRefreshCallback mSwipeRefreshCallback;
     private SwipeAdapter mSwipeAdapter;
+    private Context mContext;
 
     public SwipeRecyclerView(Context context) {
         this(context, null);
+        mContext = context;
     }
 
     public SwipeRecyclerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        mContext = context;
     }
 
     public SwipeRecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mContext = context;
         inflate(context, R.layout.swiperecyclerview, this);
         mSwipeRefreshLayout = (MSwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = (RecyclerView) findViewById(recyclerView);
         init();
     }
 
@@ -67,7 +73,9 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
                         mSwipeAdapter.isHasMore() &&
                         mSwipeAdapter.userDataCount() == mLinearLayoutManager.findLastCompletelyVisibleItemPosition()) {
                     mSwipeAdapter.setLoadStatus(2);
-                    mRefreshCallback.upRefresh(mSwipeAdapter.userDataCount());
+                    if (null != mRefreshCallback) {
+                        mRefreshCallback.upRefresh(mSwipeAdapter.userDataCount());
+                    }
                 }
             }
         });

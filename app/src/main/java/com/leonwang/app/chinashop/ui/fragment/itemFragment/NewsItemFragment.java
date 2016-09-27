@@ -45,8 +45,10 @@ public class NewsItemFragment extends RxLazyBaseFragment {
 
     //当前页数
     int curpageInt = 1;
-    //总页数 -----模拟测试 具体根据接口返回做判断
-    int totalPagerInt = 5;
+    //总条目数
+    int totalPagerInt ;
+    //初始化list条目数
+    private boolean isListSize = true;
 
     @Override
     public int getLayoutResId() {
@@ -71,7 +73,7 @@ public class NewsItemFragment extends RxLazyBaseFragment {
     private void initData() {
 
         RecyclerView mRecyclerView = mSwipeRecyclerView.getRecyclerView();
-        mRecyclerView.setLayoutManager(LayoutHelper.getLinearLayout(getApplicationContext()));
+        //mRecyclerView.setLayoutManager(LayoutHelper.getLinearLayout(getApplicationContext()));
         mRecyclerView.addItemDecoration(LayoutHelper.getHorizontalDivider_6(getApplicationContext()));
         mSwipeRecyclerView.setRefreshCallback(new RefreshCallback() {
             //下拉刷新
@@ -80,20 +82,14 @@ public class NewsItemFragment extends RxLazyBaseFragment {
 //                Toast.makeText(getApplicationContext(),"下拉刷新",Toast.LENGTH_SHORT).show();
                 if (mArrayList != null) mArrayList.clear();
                 curpageInt = 1;
-                getNetData(true);
+                getNetData();
             }
 
             //加载更多
             @Override
             public void upRefresh(int count) {
-//                getNetData();
-                if (curpageInt < totalPagerInt) {
-                    curpageInt = ++curpageInt;
-                    getNetData(true);
-                } else {
-                    getNetData(false);
-                }
-
+                getNetData();
+                LogUtils.d("--------------count-----------------"+count);
             }
         });
 
@@ -115,7 +111,7 @@ public class NewsItemFragment extends RxLazyBaseFragment {
 
 
 
-    private void getNetData(final boolean isLoadMore) {
+    private void getNetData() {
         RetrofitHelper.getTopNewsApi()
                 .getNews(mENewsType.getType(),ConstantUtils.NEWS_APIKEY)
                 .compose(this.<TopNewsEntity>bindToLifecycle())
@@ -123,6 +119,10 @@ public class NewsItemFragment extends RxLazyBaseFragment {
                     @Override
                     public Observable<?> call(TopNewsEntity topNewsEntity) {
                         mArrayList = topNewsEntity.getResult().getData();
+                        if (isListSize) {
+                            totalPagerInt = mArrayList.size()*3;//模拟加载3页
+                            isListSize = false;
+                        }
                         return Observable.just("onNext");
                     }
                 })
@@ -131,7 +131,7 @@ public class NewsItemFragment extends RxLazyBaseFragment {
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object s) {
-                        mTopNewsAdapter.load(mArrayList,isLoadMore);
+                        mTopNewsAdapter.load(mArrayList,totalPagerInt);
                     }
                 }, new Action1<Throwable>() {
                     @Override

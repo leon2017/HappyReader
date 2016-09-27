@@ -58,13 +58,7 @@ public class TopNewsAdapter extends SwipeAdapter1<DataEntity,TopNewsViewHolder> 
         }
         holder.mTvTitle.setText(dataEntity.getTitle());
         holder.mTvDesc.setText(dataEntity.getTitle()+dataEntity.getUrl()+dataEntity.getThumbnail_pic_s()+dataEntity.getThumbnail_pic_s02());
-        String id = dataEntity.getUniquekey();//wechat_20150402028462
-        if (null !=id && id.length()==21){
-            String[] idArray = id.split("_", 0);
-            String subTime = idArray[1].substring(0, 9);//20150402
-            holder.mTvTime.setText("时间轴："+subTime.substring(0,4)+"年"+subTime.substring(4,6)+"月"+subTime.substring(6,subTime.length()-1)+"日");
-        }
-
+        holder.mTvTime.setText("时间轴："+dataEntity.getDate());
         holder.mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
         App.getInstance().displayImage(dataEntity.getThumbnail_pic_s(),holder.mImageView,0,true, DiskCacheStrategy.ALL);
         holder.mTvTab2.setText("『"+dataEntity.getType()+"』");

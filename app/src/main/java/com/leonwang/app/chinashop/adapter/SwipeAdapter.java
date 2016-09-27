@@ -13,6 +13,7 @@ import com.leonwang.app.chinashop.adapter.vhs.baseVhs.MoreVH;
 import com.leonwang.app.chinashop.iml.SwipeHelper;
 import com.leonwang.app.chinashop.iml.SwipeItemCallback;
 import com.leonwang.app.chinashop.iml.SwipeRefreshCallback;
+import com.leonwang.app.chinashop.utils.ToastUtils;
 
 import java.util.ArrayList;
 
@@ -39,10 +40,12 @@ public abstract class SwipeAdapter<E, UVH extends RecyclerView.ViewHolder> exten
 
     private int mLoadStatus = -1;//加载状态
     private boolean mHasMore;//是否有更多选项
+    private Context mContext;
 
     SwipeAdapter(Context context, SwipeItemCallback<E> swipeItemCallback) {
         mSwipeItemCallback = swipeItemCallback;
         mLayoutInflater = LayoutInflater.from(context);
+        mContext = context;
     }
 
     /**
@@ -82,6 +85,7 @@ public abstract class SwipeAdapter<E, UVH extends RecyclerView.ViewHolder> exten
                         notifyItemRangeInserted(getItemCount() - temp.size(), mList.size());
                     } else {
                         notifyItemRangeChanged(mList.size() - temp.size(), mList.size());
+                        ToastUtils.showToast(mContext,R.string.swipe_not_lodemore);
                     }
                 }
                 break;

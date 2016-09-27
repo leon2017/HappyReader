@@ -28,8 +28,11 @@
     <string name="swipe_loading_error">网络不给力,点击重试</string>
     <string name="swipe_def_error">网络神游了\n点击页面重新刷新</string>
     <string name="swipe_def_sale">暂无数据\n换个搜索条件试试</string>
+    <string name="swipe_not_lodemore">已加载到最后一页</string>
 
     <string name="load_error_retry">加载失败，点击重试</string>
+
+    <string name="back_app">再按一次退出悦读</string>
 
 
 </resources>

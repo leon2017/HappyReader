@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -20,6 +21,7 @@ import com.leonwang.app.chinashop.ui.fragment.NewsFragment;
 import com.leonwang.app.chinashop.ui.fragment.VideoFragment;
 import com.leonwang.app.chinashop.ui.fragment.ZhihuFragment;
 import com.leonwang.app.chinashop.utils.LogUtils;
+import com.leonwang.app.chinashop.utils.SnackBarUtils;
 
 import butterknife.BindView;
 
@@ -52,6 +54,7 @@ public class MainActivity extends RxAppCompatBaseActivity {
     private int mToolBarBG = R.color.colorPrimary;
     private Bundle mSavedInstanceState;
     private FragmentManager mFm;
+    private long firstTime = 0;// 记录第一次按返回键的时间
 
     @Override
     protected int getLayoutId() {
@@ -209,5 +212,23 @@ public class MainActivity extends RxAppCompatBaseActivity {
         if (mDeveloperFragment != null) {
             transaction.hide(mDeveloperFragment);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                long secondTime = System.currentTimeMillis();
+                if (secondTime - firstTime > 2000) {
+                    SnackBarUtils.showSnackBar(mActivityMain, this.getString(R.string.back_app)).show();
+                    firstTime = secondTime;
+                    return true;
+                } else {
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(0);
+                }
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
