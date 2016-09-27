@@ -18,7 +18,7 @@ import rx.Observable;
 
 public interface LolVedioService {
 
-   /* @GET("rest/ItemsService/videos")
+   /* @GET("rest/ItemsService/videos{}")
     Observable<VideoEntity> getLolVideoUrl(@Path("catid") String catid,
                                            @Path("catwordid") String catwordid,
                                            @Path("page") String curPage,

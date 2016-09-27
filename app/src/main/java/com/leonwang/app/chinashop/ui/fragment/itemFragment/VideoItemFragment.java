@@ -13,7 +13,6 @@ import com.leonwang.app.chinashop.iml.SwipeItemCallback;
 import com.leonwang.app.chinashop.net.RetrofitHelper;
 import com.leonwang.app.chinashop.utils.ConstantUtils;
 import com.leonwang.app.chinashop.utils.LayoutHelper;
-import com.leonwang.app.chinashop.utils.LogUtils;
 import com.leonwang.app.chinashop.widget.SwipeRecyclerView;
 
 import java.util.ArrayList;
@@ -123,7 +122,7 @@ public class VideoItemFragment extends RxLazyBaseFragment {
                             totalSize = mEntityArrayList.size()*60;
                             isListSatae = false;
                         }
-                        LogUtils.d("-------------mEntityArrayList----------"+mEntityArrayList.size());
+//                        LogUtils.d("-------------mEntityArrayList----------"+mEntityArrayList.size());
                         return Observable.just("onNext");
                     }
                 })
