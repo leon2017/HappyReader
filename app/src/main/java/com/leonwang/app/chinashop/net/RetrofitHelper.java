@@ -2,6 +2,7 @@ package com.leonwang.app.chinashop.net;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.leonwang.app.chinashop.config.App;
+import com.leonwang.app.chinashop.net.api.LolVedioService;
 import com.leonwang.app.chinashop.net.api.TopNewsService;
 
 import java.io.File;
@@ -29,6 +30,8 @@ public class RetrofitHelper {
 
     //聚合数据base url
     public static final String JUHE_BASE_URL = "http://v.juhe.cn/";
+    //LOL视频
+    public static final String LOL_BASE_URL = "http://lol.zhangyoubao.com/apis/";
 
 
     static{
@@ -46,6 +49,17 @@ public class RetrofitHelper {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         return retrofit.create(TopNewsService.class);
+    }
+
+    //获取LOL视频api
+    public static LolVedioService getLolVedioApi() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LOL_BASE_URL)
+                .client(mOkHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        return retrofit.create(LolVedioService.class);
     }
 
     private static void initOkhttpClient() {

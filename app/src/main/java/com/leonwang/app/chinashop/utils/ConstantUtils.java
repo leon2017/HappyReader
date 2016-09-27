@@ -60,4 +60,57 @@ public class ConstantUtils {
             return mTitle;
         }
     }
+
+    /*
+    * lol视频相关数据
+    *  ----- catid
+    *  ----- catwordid
+    *  ----- curPage
+    *  ----- t_
+    *  ----- p_
+    * */
+    public enum LolType {
+
+        RUOFENG(0, "若风解说", "10172", "146", "1467794913084", "11597"),
+        ZUIXIN_JIESHUO(1, "最新解说", "10172", "113", "1467794446790", "22715"),
+        ZUIXIN_SAISHI(1, "最新赛事", "10173", "114", "1467794563851", "13898"),
+        MENGBI(1, "懵逼瞬间", "10174", "48", "1467794689385", "30500"),
+        OTHER(1, "其他LOL", "10174", "91", "1470366703179", "11882");
+
+        LolType(int index, String title, String catid, String catwordid, String t_, String p_) {
+            mIndex = index;
+            mTitle = title;
+            mCatid = catid;
+            mCatwordid = catwordid;
+            mT_ = t_;
+            mP_ = p_;
+        }
+
+        private int mIndex;
+        private String mTitle;
+        private String mCatid;
+        private String mCatwordid;
+        private String mT_;
+        private String mP_;
+
+        public String getTitle() {
+            return mTitle;
+        }
+
+        public String getCatid() {
+            return mCatid;
+        }
+
+        public String getCatwordid() {
+            return mCatwordid;
+        }
+
+        public String getT_() {
+            return mT_;
+        }
+
+        public String getP_() {
+            return mP_;
+        }
+    }
 }

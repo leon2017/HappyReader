@@ -101,7 +101,7 @@ public class SwipeRecyclerView extends FrameLayout implements SwipeRefreshLayout
 
     @ColorRes
     protected int colorSchemeResources() {
-        return R.color.colorAccent;
+        return R.color.colorPrimary;
     }
 
     @Override

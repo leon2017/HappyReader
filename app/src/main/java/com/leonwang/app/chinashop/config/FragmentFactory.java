@@ -2,6 +2,7 @@ package com.leonwang.app.chinashop.config;
 
 import com.leonwang.app.chinashop.base.RxLazyBaseFragment;
 import com.leonwang.app.chinashop.ui.fragment.itemFragment.NewsItemFragment;
+import com.leonwang.app.chinashop.ui.fragment.itemFragment.VideoItemFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,16 @@ public class FragmentFactory {
         RxLazyBaseFragment fragment = mCache.get(tag);
         if (fragment == null) {
             fragment = new NewsItemFragment();
+            mCache.put(tag, fragment);
+        }
+        return fragment;
+    }
+
+    //视频fragment
+    public static RxLazyBaseFragment creatVedioFragment(String tag) {
+        RxLazyBaseFragment fragment = mCache.get(tag);
+        if (fragment == null) {
+            fragment = new VideoItemFragment();
             mCache.put(tag, fragment);
         }
         return fragment;

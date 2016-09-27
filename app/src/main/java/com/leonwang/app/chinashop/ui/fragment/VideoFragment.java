@@ -1,15 +1,20 @@
 package com.leonwang.app.chinashop.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.view.ViewPager;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.leonwang.app.chinashop.R;
+import com.leonwang.app.chinashop.adapter.VedioPagerAdapter;
 import com.leonwang.app.chinashop.base.RxLazyBaseFragment;
-import com.leonwang.app.chinashop.widget.LoadMoreRecyclerView;
+import com.leonwang.app.chinashop.utils.ConstantUtils;
+import com.leonwang.app.chinashop.utils.LogUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-
-import static com.leonwang.app.chinashop.R.id.recyclerView;
 
 /**
  * 当前类注释：视频
@@ -21,12 +26,14 @@ import static com.leonwang.app.chinashop.R.id.recyclerView;
 
 public class VideoFragment extends RxLazyBaseFragment {
 
-    @BindView(recyclerView)
-    LoadMoreRecyclerView mRecyclerView;
-    @BindView(R.id.refresh_layout)
-    SwipeRefreshLayout mRefreshLayout;
-    private int page = 0;
-    private int mColumnCount = 1;
+
+    @BindView(R.id.sliding_tabs)
+    SlidingTabLayout mSlidingTabs;
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+
+    private List<String> mTabTitleList;
+    private VedioPagerAdapter mVedioPagerAdapter;
 
     public static VideoFragment newInstance(String param2) {
         VideoFragment videoFragment = new VideoFragment();
@@ -41,19 +48,28 @@ public class VideoFragment extends RxLazyBaseFragment {
         return R.layout.fragment_video;
     }
 
+    @SuppressLint({"NewApi", "ClickableViewAccessibility"})
     @Override
     protected void finishCreateView(Bundle savedInstanceState) {
-        lazyLoad();
+        if (mTabTitleList == null || mTabTitleList.isEmpty()) {
+            mTabTitleList = new ArrayList<>();
+            ConstantUtils.LolType[] lolTypes = ConstantUtils.LolType.values();
+            if (lolTypes.length > 0) {
+                for (int i = 0; i < lolTypes.length; i++) {
+                    mTabTitleList.add(lolTypes[i].getTitle());
+                    LogUtils.d("-----------视频tab集合---------"+mTabTitleList.get(i));
+                }
+            }
+        }
+        mVedioPagerAdapter = new VedioPagerAdapter(getChildFragmentManager(),mTabTitleList);
+        mViewPager.setOffscreenPageLimit(5);
+        mViewPager.setAdapter(mVedioPagerAdapter);
+        mSlidingTabs.setViewPager(mViewPager);
     }
 
     @Override
     protected void lazyLoad() {
-        if (!isPrepared || !isVisible) return;
-        initData();
-        isPrepared = false;
-    }
-
-    private void initData() {
 
     }
+
 }

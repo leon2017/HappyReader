@@ -42,4 +42,11 @@ public class LayoutHelper {
                 .build();
     }
 
+    public static HorizontalDividerItemDecoration getHorizontalDividerTranslate(Context context) {
+        return new HorizontalDividerItemDecoration.Builder(context)
+                .color(Color.TRANSPARENT)
+                .sizeResId(R.dimen.nine)
+                .build();
+    }
+
 }
