@@ -74,6 +74,8 @@ dependencies {
     //swiperefreshalayout
     compile 'com.demievil.library:refreshlayout:1.0.0@aar'
     compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    compile files('libs/pinyin4j-2.5.0.jar')
+
 }
 
 apt {

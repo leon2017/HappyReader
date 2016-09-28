@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -8,17 +9,27 @@
     android:orientation="vertical"
     tools:context="com.leonwang.app.chinashop.ui.activity.MainActivity">
 
-    <include layout="@layout/layout_toolbar" />
-
-    <FrameLayout
-        android:id="@+id/layFrame"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordlayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        >
+
+        <include layout="@layout/layout_toolbar"/>
+
+        <FrameLayout
+            android:id="@+id/layFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    </android.support.design.widget.CoordinatorLayout>
+
 
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
-</LinearLayout>
+        android:layout_above="@+id/coordlayout"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>

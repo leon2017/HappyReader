@@ -10,7 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -37,7 +37,7 @@ public class MainActivity extends RxAppCompatBaseActivity {
     @BindView(R.id.bottom_navigation_bar)
     BottomNavigationBar mBottomNavigationBar;
     @BindView(R.id.activity_main)
-    LinearLayout mActivityMain;
+    RelativeLayout mActivityMain;
 
     //fragment
     private NewsFragment mNewsFragment;

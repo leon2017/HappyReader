@@ -30,7 +30,13 @@
     <color name="navigation_subtitle_primary_text">#FFFFFFFF</color>
     <color name="navigation_subtitle_secondary_text">#BFFFFFFF</color>
     <color name="card_view_background_dark">#424242</color>
-
+    <color name="divider">#E5E5E5</color>
+    <color name="shadow">#AAEBEBEB</color>
+    <color name="common_bg">#FAFAFA</color>
+    <color name="content_bg">#F3F3F3</color>
+    <color name="gray_deep">#5c5c5c</color>
+    <color name="alpha_gray">#CC646464</color>
+    <color name="theme_gray">#646464</color>
 
     <color name= "color_H1">#f4f5f9</color>
     <color name= "color_H2">#e5e5e5</color>
