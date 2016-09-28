@@ -12,74 +12,85 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+    signingConfigs {
+        config_release {
+            keyAlias 'weiyue'
+            keyPassword 'weiyue123'
+            storeFile file('weiyue.jks')
+            storePassword 'weiyue123'
+        }
+
+        buildTypes {
+            release {
+                minifyEnabled false
+                signingConfig signingConfigs.config_release
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                zipAlignEnabled true
+            }
         }
     }
-}
 
-dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    testCompile 'junit:junit:4.12'
-    //黄油小刀注解
-    compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    //Okhttp3
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
-    //Gson
-    compile 'com.google.code.gson:gson:2.6.2'
-    //Rxjava
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
-    //Retrofit2
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
-    //Glide 图片加载库
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    //tabLayout
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0@aar'
-    //html解析库
-    compile 'org.jsoup:jsoup:1.8.3'
-    //RxLifecycle 内存泄露
-    compile 'com.trello:rxlifecycle-components:0.6.1'
-    //RxBinding系列
-    compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-design:0.3.0'
-    // 调试工具
-    compile 'com.facebook.stetho:stetho:1.3.1'
-    compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
-    //searchBar
-    compile 'com.miguelcatalan:materialsearchview:1.4.0'
-    //沉浸式
-    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-    compile 'com.android.support:palette-v7:24.1.1'
-    //eventbus
-    compile 'org.greenrobot:eventbus:3.0.0'
-    apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
-    compile 'com.android.support:design:24.2.0'
-    compile 'com.android.support:cardview-v7:24.2.0'
-    compile 'com.android.support:recyclerview-v7:24.2.0'
-    //bottom-navigation-bar
-    compile 'com.ashokvarma.android:bottom-navigation-bar:1.3.0'
-    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
-    //swiperefreshalayout
-    compile 'com.demievil.library:refreshlayout:1.0.0@aar'
-    compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
-    compile files('libs/pinyin4j-2.5.0.jar')
+    dependencies {
+        compile fileTree(include: ['*.jar'], dir: 'libs')
+        androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+            exclude group: 'com.android.support', module: 'support-annotations'
+        })
+        compile 'com.android.support:appcompat-v7:24.2.0'
+        testCompile 'junit:junit:4.12'
+        //黄油小刀注解
+        compile 'com.jakewharton:butterknife:8.4.0'
+        apt 'com.jakewharton:butterknife-compiler:8.4.0'
+        //Okhttp3
+        compile 'com.squareup.okhttp3:okhttp:3.2.0'
+        compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+        //Gson
+        compile 'com.google.code.gson:gson:2.6.2'
+        //Rxjava
+        compile 'io.reactivex:rxandroid:1.1.0'
+        compile 'io.reactivex:rxjava:1.1.0'
+        //Retrofit2
+        compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+        compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
+        compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+        //Glide 图片加载库
+        compile 'com.github.bumptech.glide:glide:3.7.0'
+        //tabLayout
+        compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0@aar'
+        //html解析库
+        compile 'org.jsoup:jsoup:1.8.3'
+        //RxLifecycle 内存泄露
+        compile 'com.trello:rxlifecycle-components:0.6.1'
+        //RxBinding系列
+        compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
+        compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
+        compile 'com.jakewharton.rxbinding:rxbinding-design:0.3.0'
+        // 调试工具
+        compile 'com.facebook.stetho:stetho:1.3.1'
+        compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
+        //searchBar
+        compile 'com.miguelcatalan:materialsearchview:1.4.0'
+        //沉浸式
+        compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+        compile 'com.android.support:palette-v7:24.1.1'
+        //eventbus
+        compile 'org.greenrobot:eventbus:3.0.0'
+        apt 'org.greenrobot:eventbus-annotation-processor:3.0.1'
+        compile 'com.android.support:design:24.2.0'
+        compile 'com.android.support:cardview-v7:24.2.0'
+        compile 'com.android.support:recyclerview-v7:24.2.0'
+        //bottom-navigation-bar
+        compile 'com.ashokvarma.android:bottom-navigation-bar:1.3.0'
+        compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+        //swiperefreshalayout
+        compile 'com.demievil.library:refreshlayout:1.0.0@aar'
+        compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
 
-}
+    }
 
-apt {
-    arguments {
-        eventBusIndex "com.leonwang.app.chinashop.MyEventBusIndex"
+    apt {
+        arguments {
+            eventBusIndex "com.leonwang.app.chinashop.MyEventBusIndex"
+        }
     }
 }

@@ -44,6 +44,7 @@ public class DeveloperFragment extends RxLazyBaseFragment {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
             }
         });
     }
