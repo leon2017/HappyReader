@@ -28,15 +28,53 @@
         <item name="android:indeterminateDuration">2000</item>
     </style>
 
-    <style name="LetterIndexTextViewStyle">
+    <style name="SudaWindowAnimation" parent="@android:style/TextAppearance.StatusBar.EventContent.Title">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
+    </style>
+
+    <style name="AppTheme.DrawerArrowToggle" parent="@style/Base.Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="HomeCustomButtonStyle">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">@color/home_text_color_dark</item>
+        <item name="android:background">@drawable/line_button_bg</item>
+        <item name="android:paddingLeft">15.0dip</item>
+        <item name="android:paddingTop">8.0dip</item>
+        <item name="android:paddingRight">15.0dip</item>
+        <item name="android:paddingBottom">8.0dip</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">@dimen/side_letter_bar_width</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:layout_marginTop">25.0dip</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="home_aqi_item_left_text_style" parent="@style/home_aqi_item_text_style">
+        <item name="android:textColor">@color/home_text_color_dark</item>
+        <item name="android:layout_marginLeft">10.0dip</item>
+        <item name="android:layout_alignParentLeft">true</item>
+    </style>
+
+    <style name="home_aqi_item_right_text_style" parent="@style/home_aqi_item_text_style">
+        <item name="android:textColor">@color/home_text_color</item>
+        <item name="android:layout_marginRight">10.0dip</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="home_aqi_item_text_style">
+        <item name="android:textSize">13.0sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/white</item>
+        <!--<item name="android:progressBackgroundTint">@color/white</item>-->
     </style>
 
 </resources>

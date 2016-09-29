@@ -1,12 +1,17 @@
 package com.leonwang.app.chinashop.config;
 
 import android.app.Application;
+import android.app.Service;
 import android.content.Context;
+import android.os.Vibrator;
 import android.widget.ImageView;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.stetho.Stetho;
+import com.leonwang.app.chinashop.baidulocation.LocationService;
+import com.leonwang.app.chinashop.utils.AssetsCopyUtil;
 import com.leonwang.app.chinashop.utils.ConstantUtils;
 
 import java.util.Arrays;
@@ -24,6 +29,8 @@ public class App extends Application {
 
     private static Context appContext;
     private static App instance;
+    public LocationService locationService;
+    public Vibrator mVibrator;
 
     @Override
     public void onCreate() {
@@ -42,6 +49,15 @@ public class App extends Application {
                         .build());
         //启动eventbus的加速模式
 //        EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
+        /***
+         * 初始化定位sdk，建议在Application中创建
+         */
+        locationService = new LocationService(getApplicationContext());
+        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        SDKInitializer.initialize(getApplicationContext());
+
+        AssetsCopyUtil.copyEmbassy2Databases(this, "data/data/" + this.getPackageName() + "/databases/",
+                "weather.db");
     }
 
     public static App getInstance() {

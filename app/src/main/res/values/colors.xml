@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#2AA96B</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="transparent">#00000000</color>
     <color name="yellow">#FFD11B</color>
     <color name="yellow_30">#FEA501</color>
     <color name="pink">#FD7071</color>
@@ -349,4 +350,37 @@
     <color name="darkblue">#00008b</color>
     <!-- 暗蓝色 -->
     <color name="navy">#000080</color>
+
+
+    <color name="home_custom_button_bg_color">#11ffffff</color>
+    <color name="home_inside_divider_color">#22ffffff</color>
+    <color name="home_item_divider_color">#55ffffff</color>
+    <color name="home_text_color">@color/white</color>
+    <color name="home_text_color_dark">#aaffffff</color>
+
+    <!-- sky color -->
+    <color name="clear_sky_day_end">#ff78b1d7</color>
+    <color name="clear_sky_day_start">#ff1f99d6</color>
+    <color name="clear_sky_night_end">#ff1a1835</color>
+    <color name="clear_sky_night_start">#ff0b0933</color>
+    <color name="cloudy_sky_day_end">#ff78b1d7</color>
+    <color name="cloudy_sky_day_start">#ff1f99d6</color>
+    <color name="cloudy_sky_night_end">#ff1a1835</color>
+    <color name="cloudy_sky_night_start">#ff0b0933</color>
+    <color name="rain_sky_day_end">#ff2e526c</color>
+    <color name="rain_sky_day_start">#ff4f687b</color>
+    <color name="rain_sky_night_end">#ff08131b</color>
+    <color name="rain_sky_night_start">#ff0b1c29</color>
+    <color name="haze_sky_day_end">#ff86754a</color>
+    <color name="haze_sky_day_start">#ff6e6956</color>
+    <color name="haze_sky_night_end">#ff35301e</color>
+    <color name="haze_sky_night_start">#ff292822</color>
+    <color name="overcast_sky_day_end">#ff6e7376</color>
+    <color name="overcast_sky_day_start">#ff313638</color>
+    <color name="overcast_sky_night_end">#ff1c1921</color>
+    <color name="overcast_sky_night_start">#ff201f25</color>
+    <color name="fog_sky_day_end">#ff598caf</color>
+    <color name="fog_sky_day_start">#ff1880a6</color>
+    <color name="fog_sky_night_end">#ff1a1835</color>
+    <color name="fog_sky_night_start">#ff0b0933</color>
 </resources>

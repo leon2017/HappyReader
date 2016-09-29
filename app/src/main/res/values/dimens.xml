@@ -89,4 +89,12 @@
     <dimen name="side_letter_bar_letter_size">12sp</dimen>
     <dimen name="side_letter_bar_width">36dp</dimen>
     <dimen name="city_text_size">16sp</dimen>
+
+
+    <!--抽屉 -->
+    <dimen name="drawer_item_height">54dp</dimen>
+    <dimen name="drawer_icon_size">23dp</dimen>
+    <dimen name="drawer_icon_margin_left">20dp</dimen>
+    <dimen name="drawer_icon_margin_right">24dp</dimen>
+    <dimen name="drawer_text_size">16sp</dimen>
 </resources>

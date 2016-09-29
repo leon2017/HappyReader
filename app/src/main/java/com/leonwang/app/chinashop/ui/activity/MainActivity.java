@@ -1,6 +1,7 @@
 package com.leonwang.app.chinashop.ui.activity;
 
 
+import android.Manifest;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
@@ -231,4 +232,6 @@ public class MainActivity extends RxAppCompatBaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
 }

@@ -4,6 +4,9 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.leonwang.app.chinashop.config.App;
 import com.leonwang.app.chinashop.net.api.LolVedioService;
 import com.leonwang.app.chinashop.net.api.TopNewsService;
+import com.leonwang.app.chinashop.net.api.WeatherAqiService;
+import com.leonwang.app.chinashop.net.api.WeatherDay5Service;
+import com.leonwang.app.chinashop.net.api.WeatherNowService;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -32,13 +35,46 @@ public class RetrofitHelper {
     public static final String JUHE_BASE_URL = "http://v.juhe.cn/";
     //LOL视频
     public static final String LOL_BASE_URL = "http://lol.zhangyoubao.com/apis/";
+    //小米天气
+    public static final String XIAOMI_WEATHER = "http://weatherapi.market.xiaomi.com/";
 
 
     static{
         initOkhttpClient();
     }
 
+    //获取小米天气实时数据
+    public static WeatherNowService getNowWeatherApi() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(XIAOMI_WEATHER)
+                .client(mOkHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        return retrofit.create(WeatherNowService.class);
+    }
 
+    //获取小米未来五天的天气数据
+    public static WeatherDay5Service getDay5WeatherApi() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(XIAOMI_WEATHER)
+                .client(mOkHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        return retrofit.create(WeatherDay5Service.class);
+    }
+
+    //获取小米天气实时的指数
+    public static WeatherAqiService getAqiWeatherApi() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(XIAOMI_WEATHER)
+                .client(mOkHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        return retrofit.create(WeatherAqiService.class);
+    }
 
     //获取新闻头条api
     public static TopNewsService getTopNewsApi() {
