@@ -177,7 +177,7 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getNetData(mCity.getWeatherId(),mCity.getCityName());
+                getNetData(mCity.getWeatherId(),mCity.getAreaName()+"·"+mCity.getCityName());
             }
         });
 
@@ -273,7 +273,7 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
                 return;
             }
         }
-        getNetData(mCity.getWeatherId(),cityName+"."+areaName);
+        getNetData(mCity.getWeatherId(),areaName+"·"+cityName);
     }
 
     private void getNetData(String weatherIDs,String city) {
@@ -316,13 +316,11 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
         refreshStop();
         mSkyView.setWeather(mWeatherinfo.getWeather()+"");
         swipeRefreshLayout.setColorSchemeColors(mSkyView.getBackGroundColor());
-        mCurrentAreaTv.setText(mWeatherinfo.getCity()+"");
+//        mCurrentAreaTv.setText(mWeatherinfo.getCity()+"");
         mRealTempTv.setText(mWeatherinfo.getTemp() + "");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm");
         mUpdateTimeTv.setText(
-                String.format(getResources().getString(R.string.activity_home_refresh_time), simpleDateFormat.format(mWeatherinfo.getTime()))
+                String.format(getResources().getString(R.string.activity_home_refresh_time), mWeatherinfo.getTime())
         );
-
         mWeatherAndFeelTemp.setText(
                 String.format(getResources().getString(R.string.activity_home_type_and_real_feel_temp),
                         mWeatherinfo.getWeather(), mWeatherinfo.getWD()+mWeatherinfo.getWS()+"")
