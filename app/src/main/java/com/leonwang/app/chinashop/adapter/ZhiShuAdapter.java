@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leonwang.app.chinashop.R;
-import com.leonwang.app.chinashop.db.dao.greendao.Zhishu;
+import com.leonwang.app.chinashop.entity.WeatherMZEntity;
 import com.leonwang.app.chinashop.utils.ConstantUtils;
 
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ import java.util.List;
  */
 public class ZhiShuAdapter extends BaseAdapter {
 
-    private List<Zhishu> zhishuList = new ArrayList<>();
+    private List<WeatherMZEntity.IndexesBean> zhishuList = new ArrayList<>();
     private Activity context;
 
-    public ZhiShuAdapter(List<Zhishu> zhishuList, Activity context) {
+    public ZhiShuAdapter(List<WeatherMZEntity.IndexesBean> zhishuList, Activity context) {
         this.zhishuList = zhishuList;
         this.context = context;
     }
@@ -59,15 +59,15 @@ public class ZhiShuAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Zhishu zhishu = zhishuList.get(position);
+        WeatherMZEntity.IndexesBean zhishu = zhishuList.get(position);
 
-        holder.icon.setImageResource(ConstantUtils.ZHISHU.get(zhishu.getName()));
-        if (zhishu.getName().contains("紫外线")) {
-            holder.name.setText("防晒指数");
-        } else {
-            holder.name.setText(zhishu.getName());
+        try {
+            holder.icon.setImageResource(ConstantUtils.ZHISHU.get(zhishu.getName()));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        holder.details.setText(zhishu.getDetail());
+        holder.name.setText(zhishu.getName());
+        holder.details.setText(zhishu.getContent());
 
         return convertView;
     }

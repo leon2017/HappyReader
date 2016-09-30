@@ -1,4 +1,4 @@
-package com.leonwang.app.chinashop.db.dao.greendao;
+package com.leonwang.app.chinashop.db.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

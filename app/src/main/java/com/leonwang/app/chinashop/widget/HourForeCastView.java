@@ -8,7 +8,7 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.leonwang.app.chinashop.db.dao.greendao.HourForeCast;
+import com.leonwang.app.chinashop.entity.WeatherMZEntity;
 import com.leonwang.app.chinashop.utils.ScreenUtil;
 
 import java.util.ArrayList;
@@ -71,30 +71,30 @@ public class HourForeCastView extends View {
         Path tempPath3 = new Path();
 
         int i = 1;
-        for (HourForeCast foreCast : hourForeCasts) {
+        for (WeatherMZEntity.WeatherDetailsInfoBean.Weather24HoursDetailsInfosBean foreCast : hourForeCasts) {
             paddingLeft = leftRight / 2 + (i - 1 + 0.5f) * widthAvg;
             if (i == 1) {
-                tempPath.moveTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp() - tempL) * lineAvg));
+                tempPath.moveTo(paddingLeft, height - (linePaddingBottom + (foreCast.getHighestTemperature() - tempL) * lineAvg));
             } else if (i > 1 && i <= 10) {
-                tempPath.lineTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp() - tempL) * lineAvg));
-                tempPath2.moveTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp() - tempL) * lineAvg));
+                tempPath.lineTo(paddingLeft, height - (linePaddingBottom + (foreCast.getHighestTemperature() - tempL) * lineAvg));
+                tempPath2.moveTo(paddingLeft, height - (linePaddingBottom + (foreCast.getHighestTemperature() - tempL) * lineAvg));
             } else if (i > 10 && i <= 20) {
-                tempPath2.lineTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp() - tempL) * lineAvg));
-                tempPath3.moveTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp() - tempL) * lineAvg));
+                tempPath2.lineTo(paddingLeft, height - (linePaddingBottom + (foreCast.getHighestTemperature() - tempL) * lineAvg));
+                tempPath3.moveTo(paddingLeft, height - (linePaddingBottom + (foreCast.getHighestTemperature() - tempL) * lineAvg));
             } else {
-                tempPath3.lineTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp() - tempL) * lineAvg));
+                tempPath3.lineTo(paddingLeft, height - (linePaddingBottom + (foreCast.getHighestTemperature() - tempL) * lineAvg));
             }
             paint.setStyle(Paint.Style.FILL);
             paint.setStrokeWidth(getFitSize(2));
-            canvas.drawCircle(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp() - tempL) * lineAvg), radius, paint);
+            canvas.drawCircle(paddingLeft, height - (linePaddingBottom + (foreCast.getHighestTemperature() - tempL) * lineAvg), radius, paint);
             paint.setStrokeWidth(0);
             paint.setStyle(Paint.Style.STROKE);
 
-            canvas.drawText(foreCast.getTemp() + "°", paddingLeft, height - (getFitSize(20) + linePaddingBottom + (foreCast.getTemp() - tempL) * lineAvg), paint);
+            canvas.drawText(foreCast.getHighestTemperature() + "°", paddingLeft, height - (getFitSize(20) + linePaddingBottom + (foreCast.getHighestTemperature() - tempL) * lineAvg), paint);
 
             //文字
-            canvas.drawText(foreCast.getWeatherCondition(), paddingLeft, height - weatherDetallPadding, paint);
-            canvas.drawText(foreCast.getHour(), paddingLeft, height - weatherTimePadding, paint);
+            canvas.drawText(foreCast.getWeather(), paddingLeft, height - weatherDetallPadding, paint);
+            canvas.drawText(foreCast.getStartTime().split(" ")[1].substring(0,5), paddingLeft, height - weatherTimePadding, paint);
             i++;
         }
         paint.setStrokeWidth(getFitSize(3));
@@ -107,14 +107,14 @@ public class HourForeCastView extends View {
 
     private int getMaxMinDelta() {
         if (hourForeCasts.size() > 0) {
-            tempL = hourForeCasts.get(0).getTemp();
-            tempH = hourForeCasts.get(0).getTemp();
-            for (HourForeCast hourForeCast : hourForeCasts) {
-                if (hourForeCast.getTemp() > tempH) {
-                    tempH = hourForeCast.getTemp();
+            tempL = hourForeCasts.get(0).getLowerestTemperature();
+            tempH = hourForeCasts.get(0).getHighestTemperature();
+            for (WeatherMZEntity.WeatherDetailsInfoBean.Weather24HoursDetailsInfosBean hourForeCast : hourForeCasts) {
+                if (hourForeCast.getHighestTemperature() > tempH) {
+                    tempH = hourForeCast.getHighestTemperature();
                 }
-                if (hourForeCast.getTemp() < tempL) {
-                    tempL = hourForeCast.getTemp();
+                if (hourForeCast.getHighestTemperature() < tempL) {
+                    tempL = hourForeCast.getHighestTemperature();
                 }
             }
             return tempH - tempL;
@@ -122,7 +122,7 @@ public class HourForeCastView extends View {
         return 0;
     }
 
-    public void setHourForeCasts(List<HourForeCast> hourForeCasts) {
+    public void setHourForeCasts(List<WeatherMZEntity.WeatherDetailsInfoBean.Weather24HoursDetailsInfosBean> hourForeCasts) {
         this.hourForeCasts.clear();
         this.hourForeCasts.addAll(hourForeCasts);
         this.invalidate();
@@ -137,7 +137,7 @@ public class HourForeCastView extends View {
     Paint paint = new Paint();
     float widthAvg;
     private float height, width;
-    private List<HourForeCast> hourForeCasts = new ArrayList<>();
+    private List<WeatherMZEntity.WeatherDetailsInfoBean.Weather24HoursDetailsInfosBean> hourForeCasts = new ArrayList<>();
     private int tempH, tempL;
     private Context context;
     private float radius = 0;

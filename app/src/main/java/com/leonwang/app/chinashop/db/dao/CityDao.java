@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.leonwang.app.chinashop.db.dao.bean.City;
-import com.leonwang.app.chinashop.db.dao.greendao.DBOpenHelper;
 
 
 /**

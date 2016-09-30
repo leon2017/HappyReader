@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.leonwang.app.chinashop.db.dao.greendao.WeekForeCast;
+import com.leonwang.app.chinashop.entity.WeatherMZEntity;
 import com.leonwang.app.chinashop.utils.ScreenUtil;
 
 import java.util.ArrayList;
@@ -61,14 +61,15 @@ public class WindForecastView extends View {
         paint.setStrokeWidth(0);
 
         int i = 1;
-        for (WeekForeCast weekForeCast : foreCasts) {
+        for (WeatherMZEntity.WeathersBean weekForeCast : foreCasts) {
             paddingLeft = leftRight / 2 + (i - 1 + 0.5f) * widthAvg;
-            canvas.drawText(weekForeCast.getFj(), paddingLeft, height / 2, paint);
+            //TODO:周报
+            canvas.drawText(weekForeCast.getWd(), paddingLeft, height / 2, paint);
             i++;
         }
     }
 
-    public void setForeCasts(List<WeekForeCast> foreCasts) {
+    public void setForeCasts(List<WeatherMZEntity.WeathersBean> foreCasts) {
         this.foreCasts.clear();
         this.foreCasts.addAll(foreCasts);
         this.invalidate();
@@ -86,6 +87,6 @@ public class WindForecastView extends View {
     private float height, width;
     private Paint paint = new Paint();
     private Context context;
-    private List<WeekForeCast> foreCasts = new ArrayList<>();
+    private List<WeatherMZEntity.WeathersBean> foreCasts = new ArrayList<>();
     private float leftRight;
 }

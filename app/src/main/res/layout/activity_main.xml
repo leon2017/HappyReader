@@ -13,6 +13,7 @@
         android:id="@+id/coordlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_navigation_bar"
         >
 
         <include layout="@layout/layout_toolbar"/>
@@ -29,7 +30,6 @@
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/coordlayout"
         android:layout_alignParentBottom="true"
         />
 </RelativeLayout>

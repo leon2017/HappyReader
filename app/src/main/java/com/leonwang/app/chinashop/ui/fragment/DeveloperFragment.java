@@ -6,20 +6,16 @@ import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -28,15 +24,8 @@ import com.leonwang.app.chinashop.adapter.ZhiShuAdapter;
 import com.leonwang.app.chinashop.base.RxLazyBaseFragment;
 import com.leonwang.app.chinashop.db.dao.CityDao;
 import com.leonwang.app.chinashop.db.dao.bean.City;
-import com.leonwang.app.chinashop.db.dao.greendao.Alarms;
-import com.leonwang.app.chinashop.db.dao.greendao.Aqi;
-import com.leonwang.app.chinashop.db.dao.greendao.RealWeather;
-import com.leonwang.app.chinashop.db.dao.greendao.Zhishu;
-import com.leonwang.app.chinashop.db.manager.WeatherInfo;
-import com.leonwang.app.chinashop.db.manager.WeatherManager;
-import com.leonwang.app.chinashop.entity.WeatherNowEntity;
+import com.leonwang.app.chinashop.entity.WeatherMZEntity;
 import com.leonwang.app.chinashop.net.RetrofitHelper;
-import com.leonwang.app.chinashop.utils.ConstantUtils;
 import com.leonwang.app.chinashop.utils.GpsUtil;
 import com.leonwang.app.chinashop.utils.LogUtils;
 import com.leonwang.app.chinashop.utils.ScreenUtil;
@@ -50,7 +39,6 @@ import com.leonwang.app.chinashop.widget.WindForecastView;
 import com.leonwang.app.chinashop.widget.WindmillView;
 import com.leonwang.app.chinashop.widget.weather.SkyView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,12 +124,10 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
     private CityDao cityDao ;
     private String weatherID = "101190501";
     private boolean openOrClose = false;
-
-    private WeatherManager weatherManager;
     private ZhiShuAdapter mZhiShuAdapter;
-    private List<Zhishu> zhishuList;
-    private WeatherNowEntity.WeatherinfoEntity mWeatherinfo;
+    private List<WeatherMZEntity.IndexesBean> zhishuList;
     private City mCity;
+    private WeatherMZEntity mWeatherMZEntity;
 
     public static DeveloperFragment newInstance(String param4) {
         DeveloperFragment developerFragment = new DeveloperFragment();
@@ -160,11 +146,9 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
     @Override
     protected void finishCreateView(Bundle savedInstanceState) {
         cityDao = new CityDao(getApplicationContext());
-        weatherManager = new WeatherManager(getSupportActivity());
 //        contentMian.setVisibility(View.INVISIBLE);
-        //6.0权限请求
-       // ActivityCompat.requestPermissions(getSupportActivity(), mPermissionList, 100);
 
+        mWeatherMZEntity = new WeatherMZEntity();
         mCurrentAreaTv.setText("正在刷新");
 
         swipeRefreshLayout.post(new Runnable() {
@@ -243,17 +227,6 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
     }
 
     private void initParam() {
-        /*UseArea useArea = weatherManager.queryMianUseArea();
-        if (useArea == null) {
-            GpsUtil gpsUtil = new GpsUtil(getApplicationContext(), this);
-            gpsUtil.start();
-        } else {
-            weatherID = useArea.getAreaid();
-            LogUtils.d("----------weatherID---------"+weatherID);
-            mCurrentAreaTv.setText(useArea.getAreaName());
-            refresh(true);
-        }*/
-
         GpsUtil gpsUtil = new GpsUtil(getApplicationContext(), this);
         gpsUtil.start();
     }
@@ -285,14 +258,14 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
     }
 
     private void getNowWeather() {
-        RetrofitHelper.getNowWeatherApi()
-                .getNowWeather(weatherID)
-                .compose(this.<WeatherNowEntity>bindToLifecycle())
-                .flatMap(new Func1<WeatherNowEntity, Observable<?>>() {
+        RetrofitHelper.getMZWeatherApi()
+                .getMZWeather(weatherID)
+                .compose(this.<WeatherMZEntity>bindToLifecycle())
+                .flatMap(new Func1<WeatherMZEntity, Observable<?>>() {
                     @Override
-                    public Observable<?> call(WeatherNowEntity weatherNowEntity) {
+                    public Observable<?> call(WeatherMZEntity weatherMZEntity) {
                         //TODO:这里可以做一些需求处理
-                        mWeatherinfo = weatherNowEntity.getWeatherinfo();
+                        mWeatherMZEntity = weatherMZEntity;
                         return Observable.just("onNext");
                     }
                 })
@@ -314,103 +287,55 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
 
     private void doSetNowWeatherData() {
         refreshStop();
-        mSkyView.setWeather(mWeatherinfo.getWeather()+"");
+        WeatherMZEntity.RealtimeBean realtime = mWeatherMZEntity.getRealtime();
+        WeatherMZEntity.Pm25Bean pm25 = mWeatherMZEntity.getPm25();
+        List<WeatherMZEntity.WeathersBean> weathers = mWeatherMZEntity.getWeathers();
+        //24小时
+        List<WeatherMZEntity.WeatherDetailsInfoBean.Weather24HoursDetailsInfosBean> weather24Hours
+                = mWeatherMZEntity.getWeatherDetailsInfo().getWeather24HoursDetailsInfos();
+        List<WeatherMZEntity.IndexesBean> zhishu = mWeatherMZEntity.getIndexes();
+
+        mCurrentAreaTv.setText(mWeatherMZEntity.getCity()+"·"+mWeatherMZEntity.getProvinceName());
+        mSkyView.setWeather(realtime.getWeather()+"");
         swipeRefreshLayout.setColorSchemeColors(mSkyView.getBackGroundColor());
-//        mCurrentAreaTv.setText(mWeatherinfo.getCity()+"");
-        mRealTempTv.setText(mWeatherinfo.getTemp() + "");
+        mRealTempTv.setText(realtime.getTemp() + "");
+        //2016-09-30 10:00:00
+//        mUpdateTimeTv.setText(realtime.getTime().split(" ")[1].substring(0,5));
         mUpdateTimeTv.setText(
-                String.format(getResources().getString(R.string.activity_home_refresh_time), mWeatherinfo.getTime())
+                String.format(getResources().getString(R.string.activity_home_refresh_time), realtime.getTime().split(" ")[1].substring(0,5))
         );
         mWeatherAndFeelTemp.setText(
                 String.format(getResources().getString(R.string.activity_home_type_and_real_feel_temp),
-                        mWeatherinfo.getWeather(), mWeatherinfo.getWD()+mWeatherinfo.getWS()+"")
+                        realtime.getWeather(), realtime.getWD()+realtime.getWS()+"")
         );
+        mRealAqiTv.setText("空气" + pm25.getQuality() + " " + pm25.getAqi());
+        //周报&&时报
+        weekForeCastView.setForeCasts(weathers);
+        hourForeCastView.setHourForeCasts(weather24Hours);
+        windForecastView.setForeCasts(weathers);
+        //风速湿度
+        windViewBig.setWindSpeedDegree(Integer.parseInt(realtime.getWS().replace("级", "")));
+        windViewSmall.setWindSpeedDegree(Integer.parseInt(realtime.getWS().replace("级", "")));
+        mWindDegreeTv.setText(realtime.getWD());
+        mWindLevelTv.setText(realtime.getWS());
+        progressBar.setProgress(realtime.getSD());
+        mShiduTv.setText(realtime.getSD() + "");
+        //空气
+        mAqi.setProgressAndLabel(pm25.getAqi(), "空气" + pm25.getQuality());
+        mPm2_5Tv.setText(pm25.getPm25() + " μg/m³");
+        mPm10Tv.setText(pm25.getPm10() + " μg/m³");
+        mSo2Tv.setText(pm25.getSo2() + " μg/m³");
+        mNo2Tv.setText(pm25.getNo2() + " μg/m³");
 
-    }
+        //日出-----暂无数据
+//        mSunRiseView.setSunRiseDownTime(realWeather.getSunrise(), realWeather.getSundown());
 
+        //指数
+        zhishuList.clear();
+        zhishuList.addAll(zhishu);
+        mZhiShuAdapter.notifyDataSetChanged();
+        contentMian.smoothScrollTo(0, 0);
 
-    private void refresh(boolean useLocal) {
-        weatherManager.refreshWeather(weatherID, useLocal, new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-
-                contentMian.setVisibility(View.VISIBLE);
-                swipeRefreshLayout.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
-
-                if (msg.what == ConstantUtils.MSG_ERROR) {
-                    Toast.makeText(getApplicationContext(), "刷新失败", Toast.LENGTH_SHORT).show();
-                } else {
-                    WeatherInfo weatherInfo = (WeatherInfo) msg.obj;
-                    Aqi aqi = weatherInfo.getAqi();
-
-                    //实时
-                    RealWeather realWeather = weatherInfo.getRealWeather();
-                    mSkyView.setWeather(realWeather.getWeatherCondition(), realWeather.getSunrise(), realWeather.getSundown());
-                    swipeRefreshLayout.setColorSchemeColors(mSkyView.getBackGroundColor());
-                    mCurrentAreaTv.setText(realWeather.getAreaName());
-                    mRealTempTv.setText(realWeather.getTemp() + "");
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm");
-                    mUpdateTimeTv.setText(
-                            String.format(getResources().getString(R.string.activity_home_refresh_time), simpleDateFormat.format(realWeather.getLastUpdate()))
-                    );
-                    mRealAqiTv.setText("空气" + aqi.getQuality() + " " + aqi.getAqi());
-                    mWeatherAndFeelTemp.setText(
-                            String.format(getResources().getString(R.string.activity_home_type_and_real_feel_temp),
-                                    realWeather.getWeatherCondition(), realWeather.getFeeltemp()+"")
-                    );
-
-                    //周报&&时报
-                    weekForeCastView.setForeCasts(weatherInfo.getWeekForeCasts());
-                    hourForeCastView.setHourForeCasts(weatherInfo.getHourForeCasts());
-                    windForecastView.setForeCasts(weatherInfo.getWeekForeCasts());
-
-                    //风速湿度
-                    windViewBig.setWindSpeedDegree(Integer.parseInt(realWeather.getFj().replace("级", "")));
-
-                    windViewSmall.setWindSpeedDegree(Integer.parseInt(realWeather.getFj().replace("级", "")));
-                    mWindDegreeTv.setText(realWeather.getFx());
-                    mWindLevelTv.setText(realWeather.getFj());
-                    progressBar.setProgress(realWeather.getShidu());
-                    mShiduTv.setText(realWeather.getShidu() + "");
-                    //空气
-                    mAqi.setProgressAndLabel(aqi.getAqi(), "空气" + aqi.getQuality());
-                    mPm2_5Tv.setText(aqi.getPm2_5() + " μg/m³");
-                    mPm10Tv.setText(aqi.getPm10() + " μg/m³");
-                    mSo2Tv.setText(aqi.getSo2() + " μg/m³");
-                    mNo2Tv.setText(aqi.getNo2() + " μg/m³");
-                    //日出
-                    mSunRiseView.setSunRiseDownTime(realWeather.getSunrise(), realWeather.getSundown());
-
-                    //指数
-                    zhishuList.clear();
-                    zhishuList.addAll(weatherInfo.getZhishu());
-                    mZhiShuAdapter.notifyDataSetChanged();
-                    contentMian.smoothScrollTo(0, 0);
-
-                    //预警
-                    final Alarms alarms = weatherInfo.getAlarms();
-                    if (alarms != null) {
-                        mRealAqiTv.setClickable(true);
-                        mRealAqiTv.setText(alarms.getAlarmLevelNoDesc() + alarms.getAlarmTypeDesc());
-                        mRealAqiTv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                /*Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
-                                intent.putExtra("alarminfo", alarms);
-                                startActivity(intent);*/
-                            }
-                        });
-                    } else
-                        mRealAqiTv.setClickable(false);
-                }
-            }
-        });
     }
 
     //可以将一下代码加到你的MainActivity中，或者在任意一个需要调用分享功能的activity当中

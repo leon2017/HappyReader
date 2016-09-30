@@ -1,7 +1,6 @@
 package com.leonwang.app.chinashop.ui.activity;
 
 
-import android.Manifest;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.design.widget.AppBarLayout;
@@ -46,12 +45,12 @@ public class MainActivity extends RxAppCompatBaseActivity {
     private ZhihuFragment mZhihuFragment;
     private DeveloperFragment mDeveloperFragment;
 
-    private String TAB[] = {"资讯", "视频", "知乎", "开发者"};
+    private String TAB[] = {"资讯", "视频", "知乎", "天气"};
     private String TITLE;
     private int TAB_COLOR[] = {R.color.colorPrimary,
             R.color.slategray,
             R.color.goldyellow,
-            R.color.mediumslateblue};
+            R.color.green_300};
     private int mToolBarBG = R.color.colorPrimary;
     private Bundle mSavedInstanceState;
     private FragmentManager mFm;

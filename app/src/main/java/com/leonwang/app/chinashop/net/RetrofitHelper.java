@@ -6,6 +6,7 @@ import com.leonwang.app.chinashop.net.api.LolVedioService;
 import com.leonwang.app.chinashop.net.api.TopNewsService;
 import com.leonwang.app.chinashop.net.api.WeatherAqiService;
 import com.leonwang.app.chinashop.net.api.WeatherDay5Service;
+import com.leonwang.app.chinashop.net.api.WeatherMZService;
 import com.leonwang.app.chinashop.net.api.WeatherNowService;
 
 import java.io.File;
@@ -37,10 +38,24 @@ public class RetrofitHelper {
     public static final String LOL_BASE_URL = "http://lol.zhangyoubao.com/apis/";
     //小米天气
     public static final String XIAOMI_WEATHER = "http://weatherapi.market.xiaomi.com/";
+    //魅族天气
+    public static final String MEIZU_WEATHER= "http://res.aider.meizu.com/";
 
 
     static{
         initOkhttpClient();
+    }
+
+
+    //获取魅族天气
+    public static WeatherMZService getMZWeatherApi() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(MEIZU_WEATHER)
+                .client(mOkHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        return retrofit.create(WeatherMZService.class);
     }
 
     //获取小米天气实时数据

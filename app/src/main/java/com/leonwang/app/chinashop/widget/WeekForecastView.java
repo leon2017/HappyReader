@@ -12,7 +12,7 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.leonwang.app.chinashop.db.dao.greendao.WeekForeCast;
+import com.leonwang.app.chinashop.entity.WeatherMZEntity;
 import com.leonwang.app.chinashop.utils.DateTimeUtil;
 import com.leonwang.app.chinashop.utils.ScreenUtil;
 import com.leonwang.app.chinashop.utils.WeatherIconUtil;
@@ -90,37 +90,37 @@ public class WeekForecastView extends View {
 
         float paddingLeft = 0;
         int i = 1;
-        for (WeekForeCast foreCast : foreCasts) {
+        for (WeatherMZEntity.WeathersBean foreCast : foreCasts) {
             paddingLeft = leftRight / 2 + (i - 1 + 0.5f) * widthAvg;
             if (lineType == 0) {
                 if (i == 1) {
-                    pathTempHigh.moveTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTempH() - tempL) * heightAvg));
-                    pathTempLow.moveTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTempL() - tempL) * heightAvg));
+                    pathTempHigh.moveTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp_day_c() - tempL) * heightAvg));
+                    pathTempLow.moveTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp_night_c() - tempL) * heightAvg));
                 } else {
-                    pathTempHigh.lineTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTempH() - tempL) * heightAvg));
-                    pathTempLow.lineTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTempL() - tempL) * heightAvg));
+                    pathTempHigh.lineTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp_day_c() - tempL) * heightAvg));
+                    pathTempLow.lineTo(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp_night_c() - tempL) * heightAvg));
                 }
                 paint.setStyle(Paint.Style.FILL);
                 paint.setStrokeWidth(getFitSize(2));
-                canvas.drawCircle(paddingLeft, height - (linePaddingBottom + (foreCast.getTempH() - tempL) * heightAvg), radius, paint);
-                canvas.drawCircle(paddingLeft, height - (linePaddingBottom + (foreCast.getTempL() - tempL) * heightAvg), radius, paint);
+                canvas.drawCircle(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp_day_c() - tempL) * heightAvg), radius, paint);
+                canvas.drawCircle(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp_night_c() - tempL) * heightAvg), radius, paint);
             } else {
-                PointF pointFH = new PointF(paddingLeft, height - (linePaddingBottom + (foreCast.getTempH() - tempL) * heightAvg));
+                PointF pointFH = new PointF(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp_day_c() - tempL) * heightAvg));
                 mPointHs.add(pointFH);
-                PointF pointFL = new PointF(paddingLeft, height - (linePaddingBottom + (foreCast.getTempL() - tempL) * heightAvg));
+                PointF pointFL = new PointF(paddingLeft, height - (linePaddingBottom + (foreCast.getTemp_night_c() - tempL) * heightAvg));
                 mPointLs.add(pointFL);
             }
 
             paint.setStrokeWidth(0);
             paint.setStyle(Paint.Style.STROKE);
-            canvas.drawText(foreCast.getTempH() + "°", paddingLeft, height - (linePaddingBottom + tempPaddingTop + (foreCast.getTempH() - tempL) * heightAvg), paint);
-            canvas.drawText(foreCast.getTempL() + "°", paddingLeft, height - (linePaddingBottom - tempPaddingBottom + (foreCast.getTempL() - tempL) * heightAvg), paint);
+            canvas.drawText(foreCast.getTemp_day_c() + "°", paddingLeft, height - (linePaddingBottom + tempPaddingTop + (foreCast.getTemp_day_c() - tempL) * heightAvg), paint);
+            canvas.drawText(foreCast.getTemp_night_c() + "°", paddingLeft, height - (linePaddingBottom - tempPaddingBottom + (foreCast.getTemp_night_c() - tempL) * heightAvg), paint);
 
             //星期
-            canvas.drawText(DateTimeUtil.getWeekOfDate(foreCast.getWeatherDate()), paddingLeft, height - (weekPaddingBottom), paint);
+            canvas.drawText(DateTimeUtil.getWeekOfDate(foreCast.getDate()), paddingLeft, height - (weekPaddingBottom), paint);
 
             //天气图标
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), WeatherIconUtil.getWeatherIconID(foreCast.getWeatherConditionStart()));
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), WeatherIconUtil.getWeatherIconID(foreCast.getWeather()));
             Bitmap bitmapDisplay = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
             canvas.drawBitmap(bitmapDisplay,
@@ -128,7 +128,7 @@ public class WeekForecastView extends View {
             bitmap.recycle();
             bitmapDisplay.recycle();
             //天气描述
-            canvas.drawText(foreCast.getWeatherConditionStart(), paddingLeft, height - (weekInfoPaddingBottom), paint);
+            canvas.drawText(foreCast.getWeather(), paddingLeft, height - (weekInfoPaddingBottom), paint);
             i++;
         }
         paint.setStrokeWidth(getFitSize(3));
@@ -152,14 +152,14 @@ public class WeekForecastView extends View {
 
     private int getMaxMinDelta() {
         if (foreCasts.size() > 0) {
-            tempH = foreCasts.get(0).getTempH();
-            tempL = foreCasts.get(0).getTempL();
-            for (WeekForeCast weekForeCast : foreCasts) {
-                if (weekForeCast.getTempH() > tempH) {
-                    tempH = weekForeCast.getTempH();
+            tempH = foreCasts.get(0).getTemp_day_c();
+            tempL = foreCasts.get(0).getTemp_night_c();
+            for (WeatherMZEntity.WeathersBean weekForeCast : foreCasts) {
+                if (weekForeCast.getTemp_day_c() > tempH) {
+                    tempH = weekForeCast.getTemp_day_c();
                 }
-                if (weekForeCast.getTempL() < tempL) {
-                    tempL = weekForeCast.getTempL();
+                if (weekForeCast.getTemp_night_c() < tempL) {
+                    tempL = weekForeCast.getTemp_night_c();
                 }
             }
             return tempH - tempL;
@@ -168,7 +168,7 @@ public class WeekForecastView extends View {
     }
 
 
-    public void setForeCasts(List<WeekForeCast> foreCasts) {
+    public void setForeCasts(List<WeatherMZEntity.WeathersBean> foreCasts) {
         this.foreCasts.clear();
         this.foreCasts.addAll(foreCasts);
         maxMinDelta = getMaxMinDelta();
@@ -247,7 +247,7 @@ public class WeekForecastView extends View {
     private float height, width;
     private Paint paint = new Paint();
     private Context context;
-    private List<WeekForeCast> foreCasts = new ArrayList<>();
+    private List<WeatherMZEntity.WeathersBean> foreCasts = new ArrayList<>();
     private float maxMinDelta;
     private int tempH, tempL;
     private float radius = 0;
