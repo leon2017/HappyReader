@@ -62,19 +62,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                            <TextView
-                                android:id="@+id/tv_updateTime"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="20.0dip"
-                                android:layout_marginTop="15.0dip"
-                                android:gravity="right"
-                                android:text="20:01 刷新"
-                                android:textColor="@color/home_text_color_dark"
-                                android:textSize="13.0sp"/>
+
                             <TextView
                                 android:id="@+id/tv_changeCity"
+                                style="@style/HomeCustomButtonStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
@@ -82,15 +73,15 @@
                                 android:layout_marginTop="15.0dip"
                                 android:gravity="right"
                                 android:text="切换城市"
-                                android:layout_below="@id/tv_updateTime"
                                 android:textColor="@color/home_text_color_dark"
-                                android:textSize="13.0sp"/>
+                                android:textSize="12.0sp"/>
+
 
                             <TextView
                                 android:id="@+id/tv_RTTemp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/tv_updateTime"
+                                android:layout_below="@id/tv_changeCity"
                                 android:layout_centerHorizontal="true"
                                 android:fontFamily="sans-serif-thin"
                                 android:gravity="center"
@@ -128,6 +119,17 @@
                                 android:layout_below="@id/tv_RTTypeAndRealFeel"
                                 android:clickable="true"
                                 android:text="空气良 59"/>
+
+                            <TextView
+                                android:id="@+id/tv_updateTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_aqi"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="12.0dip"
+                                android:text="20:01 刷新"
+                                android:textColor="@color/home_text_color_dark"
+                                android:textSize="13.0sp"/>
 
                         </RelativeLayout>
 
