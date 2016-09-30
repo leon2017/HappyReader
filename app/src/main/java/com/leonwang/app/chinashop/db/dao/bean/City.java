@@ -9,6 +9,31 @@ public class City {
     private String areaName;
     private String weatherId;
     private String areaId;
+    private String name;
+    private String pinyin;
+
+    public City() {}
+
+    public City(String name, String pinyin) {
+        this.name = name;
+        this.pinyin = pinyin;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
+    }
 
     public String getProvinceName() {
         return provinceName;
@@ -48,5 +73,18 @@ public class City {
 
     public void setAreaId(String areaId) {
         this.areaId = areaId;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "provinceName='" + provinceName + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", areaName='" + areaName + '\'' +
+                ", weatherId='" + weatherId + '\'' +
+                ", areaId='" + areaId + '\'' +
+                ", name='" + name + '\'' +
+                ", pinyin='" + pinyin + '\'' +
+                '}';
     }
 }

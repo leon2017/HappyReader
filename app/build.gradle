@@ -99,6 +99,8 @@ android {
         compile 'com.daimajia.androidanimations:library:1.1.3@aar'
 
         compile 'me.drakeet.materialdialog:library:1.3.1'
+        //权限
+        compile 'com.mylhyl:acp:1.1.7'
 
     }
 

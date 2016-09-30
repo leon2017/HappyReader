@@ -2,15 +2,14 @@ package com.leonwang.app.chinashop.ui.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -26,10 +25,12 @@ import com.leonwang.app.chinashop.db.dao.CityDao;
 import com.leonwang.app.chinashop.db.dao.bean.City;
 import com.leonwang.app.chinashop.entity.WeatherMZEntity;
 import com.leonwang.app.chinashop.net.RetrofitHelper;
+import com.leonwang.app.chinashop.ui.activity.CityLocationActivity;
 import com.leonwang.app.chinashop.utils.GpsUtil;
 import com.leonwang.app.chinashop.utils.LogUtils;
 import com.leonwang.app.chinashop.utils.ScreenUtil;
 import com.leonwang.app.chinashop.utils.TextUtil;
+import com.leonwang.app.chinashop.utils.ToastUtils;
 import com.leonwang.app.chinashop.widget.AqiView;
 import com.leonwang.app.chinashop.widget.HourForeCastView;
 import com.leonwang.app.chinashop.widget.MyListView;
@@ -38,6 +39,13 @@ import com.leonwang.app.chinashop.widget.WeekForecastView;
 import com.leonwang.app.chinashop.widget.WindForecastView;
 import com.leonwang.app.chinashop.widget.WindmillView;
 import com.leonwang.app.chinashop.widget.weather.SkyView;
+import com.mylhyl.acp.Acp;
+import com.mylhyl.acp.AcpListener;
+import com.mylhyl.acp.AcpOptions;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,14 +58,14 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * 当前类注释：开发
+ * 当前类注释：天气
  * Author :LeonWang
  * Created  2016/9/22.13:18
  * Description:
  * E-mail:lijiawangjun@gmail.com
  */
 
-public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationListener{
+public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationListener {
 
     @BindView(R.id.myWeatherView)
     SkyView mSkyView;
@@ -119,9 +127,11 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
     ScrollView contentMian;
     @BindView(R.id.refresh)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.tv_changeCity)
+    TextView mTVChangeCity;
 
 
-    private CityDao cityDao ;
+    private CityDao cityDao;
     private String weatherID = "101190501";
     private boolean openOrClose = false;
     private ZhiShuAdapter mZhiShuAdapter;
@@ -145,12 +155,12 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
     @SuppressLint({"NewApi", "ClickableViewAccessibility"})
     @Override
     protected void finishCreateView(Bundle savedInstanceState) {
+        //注册事件
+        EventBus.getDefault().register(this);
         cityDao = new CityDao(getApplicationContext());
-//        contentMian.setVisibility(View.INVISIBLE);
-
+        contentMian.setVisibility(View.INVISIBLE);
         mWeatherMZEntity = new WeatherMZEntity();
         mCurrentAreaTv.setText("正在刷新");
-
         swipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -161,10 +171,9 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getNetData(mCity.getWeatherId(),mCity.getAreaName()+"·"+mCity.getCityName());
+               lazyLoad();
             }
         });
-
         TypedArray actionbarSizeTypedArray = getActivity().obtainStyledAttributes(new int[]{android.R.attr.actionBarSize});
         int h = (int) actionbarSizeTypedArray.getDimension(0, 0);
         mFirstShowRl.getLayoutParams().height = ScreenUtil.getScreenHeight(getApplicationContext()) - h - ScreenUtil.getStatusBarHeight(getApplicationContext());
@@ -172,6 +181,7 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
         setWind();
         setZhiShu();
         lazyLoad();
+        initChangeCity();
     }
 
     /**
@@ -205,25 +215,22 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
     @Override
     protected void lazyLoad() {
 
+        //开启6.0+全选
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+            //判断是否拥有权限
+            if (getApplicationContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    && getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    && getApplicationContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    && getApplicationContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                initParam();
+            } else {
+                getPerimissons();
+            }
         } else {
             initParam();
         }
-    }
 
-    protected void getPermission(final String permission) {
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{permission}, 0);
-        } else {
-            initParam();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        initParam();
     }
 
     private void initParam() {
@@ -233,25 +240,34 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
 
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
-        Log.d("aaa", bdLocation.getCity() + bdLocation.getDistrict());
-        String areaName = TextUtil.getFormatArea(bdLocation.getDistrict());
-        String cityName = TextUtil.getFormatArea(bdLocation.getCity());
-        LogUtils.d("---------地址---------"+areaName+cityName);
-        mCity = cityDao.getCityByCityAndArea(cityName, areaName);
-        if (mCity == null) {
-            mCity = cityDao.getCityByCityAndArea(cityName, cityName);
+        if (null != bdLocation && bdLocation.getLocType() != BDLocation.TypeServerError) {
+            Log.d("aaa", bdLocation.getCity() + bdLocation.getDistrict());
+            String areaName = TextUtil.getFormatArea(bdLocation.getDistrict());
+            String cityName = TextUtil.getFormatArea(bdLocation.getCity());
+            LogUtils.d("---------地址---------" + areaName + cityName);
+            mCity = cityDao.getCityByCityAndArea(cityName, areaName);
             if (mCity == null) {
-                //TODO 此处定位失败，跳转到页面选择页面
-                refreshStop();
-                return;
+                mCity = cityDao.getCityByCityAndArea(cityName, cityName);
+                if (mCity == null) {
+                    //TODO 此处定位失败，跳转到页面选择页面
+                    refreshStop();
+                    return;
+                }
             }
+            getNetData(mCity.getWeatherId(), areaName + "·" + cityName);
+        } else if (bdLocation.getLocType() == BDLocation.TypeServerError
+                || bdLocation.getLocType() == BDLocation.TypeNetWorkException
+                || bdLocation.getLocType() == BDLocation.TypeCriteriaException) {
+            //TODO 此处定位失败，跳转到页面选择页面
+            refreshStop();
+            return;
         }
-        getNetData(mCity.getWeatherId(),areaName+"·"+cityName);
+
     }
 
-    private void getNetData(String weatherIDs,String city) {
+    private void getNetData(String weatherIDs, String city) {
         weatherID = weatherIDs;
-        mCurrentAreaTv.setText(city);
+//        mCurrentAreaTv.setText(city);
         //获取实时天气
         getNowWeather();
 
@@ -286,6 +302,7 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
     }
 
     private void doSetNowWeatherData() {
+        contentMian.setVisibility(View.VISIBLE);
         refreshStop();
         WeatherMZEntity.RealtimeBean realtime = mWeatherMZEntity.getRealtime();
         WeatherMZEntity.Pm25Bean pm25 = mWeatherMZEntity.getPm25();
@@ -295,18 +312,17 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
                 = mWeatherMZEntity.getWeatherDetailsInfo().getWeather24HoursDetailsInfos();
         List<WeatherMZEntity.IndexesBean> zhishu = mWeatherMZEntity.getIndexes();
 
-        mCurrentAreaTv.setText(mWeatherMZEntity.getCity()+"·"+mWeatherMZEntity.getProvinceName());
-        mSkyView.setWeather(realtime.getWeather()+"");
+        mCurrentAreaTv.setText(mWeatherMZEntity.getCity() + "·" + mWeatherMZEntity.getProvinceName());
+        mSkyView.setWeather(realtime.getWeather() + "");
         swipeRefreshLayout.setColorSchemeColors(mSkyView.getBackGroundColor());
         mRealTempTv.setText(realtime.getTemp() + "");
         //2016-09-30 10:00:00
-//        mUpdateTimeTv.setText(realtime.getTime().split(" ")[1].substring(0,5));
         mUpdateTimeTv.setText(
-                String.format(getResources().getString(R.string.activity_home_refresh_time), realtime.getTime().split(" ")[1].substring(0,5))
+                String.format(getResources().getString(R.string.activity_home_refresh_time), realtime.getTime().split(" ")[1].substring(0, 5))
         );
         mWeatherAndFeelTemp.setText(
                 String.format(getResources().getString(R.string.activity_home_type_and_real_feel_temp),
-                        realtime.getWeather(), realtime.getWD()+realtime.getWS()+"")
+                        realtime.getWeather(), realtime.getWD() + realtime.getWS() + "")
         );
         mRealAqiTv.setText("空气" + pm25.getQuality() + " " + pm25.getAqi());
         //周报&&时报
@@ -338,16 +354,6 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
 
     }
 
-    //可以将一下代码加到你的MainActivity中，或者在任意一个需要调用分享功能的activity当中
-    String[] mPermissionList = new String[]{
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.READ_LOGS,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.SET_DEBUG_APP,
-            Manifest.permission.SYSTEM_ALERT_WINDOW,
-    };
-
     protected void refreshStop() {
         swipeRefreshLayout.post(new Runnable() {
             @Override
@@ -357,4 +363,53 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
         });
     }
 
+    public void getPerimissons() {
+        Acp.getInstance(getSupportActivity()).request(new AcpOptions.Builder()
+                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                , Manifest.permission.ACCESS_FINE_LOCATION
+                                , Manifest.permission.ACCESS_COARSE_LOCATION
+                        )
+                        .build(),
+                new AcpListener() {
+                    @Override
+                    public void onGranted() {
+                        //权限被允许
+                        initParam();
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions) {
+                        //TODO 此处定位失败，跳转到页面选择页面
+                        refreshStop();
+                        ToastUtils.showToast(getApplicationContext(), "相关权限被拒绝");
+                    }
+                });
+    }
+
+
+    /*
+    * 切换城市
+    * */
+    private void initChangeCity() {
+
+        mTVChangeCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getSupportActivity(), CityLocationActivity.class));
+            }
+        });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //取消注册事件
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void cityEvent(City city) {
+        getNetData(city.getWeatherId(),city.getCityName());
+    }
 }

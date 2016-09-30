@@ -41,6 +41,7 @@
     <string name="nothing_found">没有搜索结果~</string>
     <string name="locating">正在定位…</string>
     <string name="located_failed">定位失败</string>
+    <string name="located_again">重新定位</string>
 
     <string name="open">打开</string>
     <string name="close">关闭</string>

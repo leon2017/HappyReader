@@ -68,6 +68,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.activity.CityLocationActivity"/>
+
     </application>
 
 </manifest>
