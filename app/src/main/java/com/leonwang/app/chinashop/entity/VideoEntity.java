@@ -1,5 +1,6 @@
 package com.leonwang.app.chinashop.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * E-mail:lijiawangjun@gmail.com
  */
 
-public class VideoEntity {
+public class VideoEntity implements Serializable{
 
     /**
      * api : 1
@@ -56,7 +57,7 @@ public class VideoEntity {
         return data;
     }
 
-    public static class DataEntity {
+    public static class DataEntity implements Serializable {
         /**
          * desc : 视频时长：42分钟
          * id : 31653

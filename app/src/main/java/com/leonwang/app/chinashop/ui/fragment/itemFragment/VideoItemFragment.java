@@ -1,5 +1,6 @@
 package com.leonwang.app.chinashop.ui.fragment.itemFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.leonwang.app.chinashop.base.RxLazyBaseFragment;
 import com.leonwang.app.chinashop.entity.VideoEntity;
 import com.leonwang.app.chinashop.iml.SwipeItemCallback;
 import com.leonwang.app.chinashop.net.RetrofitHelper;
+import com.leonwang.app.chinashop.ui.activity.LolVedioActivity;
 import com.leonwang.app.chinashop.utils.ConstantUtils;
 import com.leonwang.app.chinashop.utils.LayoutHelper;
 import com.leonwang.app.chinashop.widget.SwipeRecyclerView;
@@ -88,6 +90,11 @@ public class VideoItemFragment extends RxLazyBaseFragment {
         mLolVideoAdapter = new LolVideoAdapter(getApplicationContext(), new SwipeItemCallback<VideoEntity.DataEntity>() {
             @Override
             public void callback(View view, int position, VideoEntity.DataEntity dataEntity) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("loldata",dataEntity);
+                Intent intent = new Intent(getSupportActivity(), LolVedioActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
         });

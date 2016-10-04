@@ -88,4 +88,8 @@
         <item name="android:textColor">@color/gray</item>
     </style>
 
+    <style name="lolTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
 </resources>
