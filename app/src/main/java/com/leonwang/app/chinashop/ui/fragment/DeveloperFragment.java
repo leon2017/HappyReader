@@ -251,6 +251,7 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
                 if (mCity == null) {
                     //TODO 此处定位失败，跳转到页面选择页面
                     refreshStop();
+                    startActivity(new Intent(getSupportActivity(), CityLocationActivity.class));
                     return;
                 }
             }
@@ -260,6 +261,7 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
                 || bdLocation.getLocType() == BDLocation.TypeCriteriaException) {
             //TODO 此处定位失败，跳转到页面选择页面
             refreshStop();
+            startActivity(new Intent(getSupportActivity(), CityLocationActivity.class));
             return;
         }
 
@@ -382,6 +384,7 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
                         //TODO 此处定位失败，跳转到页面选择页面
                         refreshStop();
                         ToastUtils.showToast(getApplicationContext(), "相关权限被拒绝");
+                        startActivity(new Intent(getSupportActivity(), CityLocationActivity.class));
                     }
                 });
     }
