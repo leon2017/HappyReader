@@ -167,11 +167,10 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-               lazyLoad();
+                lazyLoad();
             }
         });
         TypedArray actionbarSizeTypedArray = getActivity().obtainStyledAttributes(new int[]{android.R.attr.actionBarSize});
@@ -242,20 +241,28 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
     public void onReceiveLocation(BDLocation bdLocation) {
         if (null != bdLocation && bdLocation.getLocType() != BDLocation.TypeServerError) {
             Log.d("aaa", bdLocation.getCity() + bdLocation.getDistrict());
-            String areaName = TextUtil.getFormatArea(bdLocation.getDistrict());
-            String cityName = TextUtil.getFormatArea(bdLocation.getCity());
-            LogUtils.d("---------地址---------" + areaName + cityName);
-            mCity = cityDao.getCityByCityAndArea(cityName, areaName);
-            if (mCity == null) {
-                mCity = cityDao.getCityByCityAndArea(cityName, cityName);
+            if (bdLocation.getCity() == "" ||
+                    bdLocation.getCity() == null ||
+                    bdLocation.getDistrict() == "" ||
+                    bdLocation.getDistrict() == null) {
+                refreshStop();
+                startActivity(new Intent(getSupportActivity(), CityLocationActivity.class));
+            } else {
+                String areaName = TextUtil.getFormatArea(bdLocation.getDistrict());
+                String cityName = TextUtil.getFormatArea(bdLocation.getCity());
+                LogUtils.d("---------地址---------" + areaName + cityName);
+                mCity = cityDao.getCityByCityAndArea(cityName, areaName);
                 if (mCity == null) {
-                    //TODO 此处定位失败，跳转到页面选择页面
-                    refreshStop();
-                    startActivity(new Intent(getSupportActivity(), CityLocationActivity.class));
-                    return;
+                    mCity = cityDao.getCityByCityAndArea(cityName, cityName);
+                    if (mCity == null) {
+                        //TODO 此处定位失败，跳转到页面选择页面
+                        refreshStop();
+                        startActivity(new Intent(getSupportActivity(), CityLocationActivity.class));
+                        return;
+                    }
                 }
+                getNetData(mCity.getWeatherId(), areaName + "·" + cityName);
             }
-            getNetData(mCity.getWeatherId(), areaName + "·" + cityName);
         } else if (bdLocation.getLocType() == BDLocation.TypeServerError
                 || bdLocation.getLocType() == BDLocation.TypeNetWorkException
                 || bdLocation.getLocType() == BDLocation.TypeCriteriaException) {
@@ -413,6 +420,6 @@ public class DeveloperFragment extends RxLazyBaseFragment implements BDLocationL
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void cityEvent(City city) {
-        getNetData(city.getWeatherId(),city.getCityName());
+        getNetData(city.getWeatherId(), city.getCityName());
     }
 }

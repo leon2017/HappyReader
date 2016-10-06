@@ -106,11 +106,11 @@ dependencies {
     compile 'me.drakeet.materialdialog:library:1.3.1'
     //权限
     compile 'com.mylhyl:acp:1.1.7'
+    //ijkplayer
+    compile project(':ijkplayerlibrary')
+    compile project(':superplayerlibrary')
     //百度map
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/httpmime-4.1.2.jar')
     compile files('libs/IndoorscapeAlbumPlugin.jar')
-    //ijkplayer
-    compile project(':ijkplayerlibrary')
-    compile project(':superplayerlibrary')
 }
