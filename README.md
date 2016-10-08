@@ -6,7 +6,7 @@
 
 或者你也可以扫描下面的二维码进行下载
 
-!(https://github.com/leon2017/ChinaShop/blob/master/screenshot/downloadimage.jpg)
+![下载地址](https://github.com/leon2017/ChinaShop/blob/master/screenshot/downloadimage.jpg)
 
 ####运行效果图：
 
