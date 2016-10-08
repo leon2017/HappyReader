@@ -66,7 +66,8 @@
 [github源码](https://github.com/leon2017/ChinaShop)
 [安装地址](http://fir.im/7d2l)
 
-由于第一次写项目多有不足之处，如果你对本项目有更多的指正支出欢迎联系我，相互学习 E-mail:（wangpingjun@live.com）
+由于第一次写项目多有不足之处，如果你对本项目有更多的指正支出欢迎联系我，相互学习
+- E-mail:（wangpingjun@live.com）
+- 微信：qlsz2014
 
-微信：qlsz2014
 ![扫一扫加我哦](https://github.com/leon2017/ChinaShop/blob/master/screenshot/wechat.jpg)
