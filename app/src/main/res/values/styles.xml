@@ -92,4 +92,11 @@
         <item name="android:fitsSystemWindows">true</item>
     </style>
 
+    <!-- Theme Splash Theme -->
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <!-- 去除App启动白屏 -->
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
 </resources>
