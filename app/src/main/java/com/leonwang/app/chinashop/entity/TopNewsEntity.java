@@ -1,5 +1,6 @@
 package com.leonwang.app.chinashop.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * E-mail:lijiawangjun@gmail.com
  */
 
-public class TopNewsEntity {
+public class TopNewsEntity implements Serializable{
 
 
     /**
@@ -72,7 +73,7 @@ public class TopNewsEntity {
             return data;
         }
 
-        public static class DataEntity {
+        public static class DataEntity implements Serializable {
             /**
              * author_name : 澎湃新闻网
              * date : 2016-09-23 07:11

@@ -1,5 +1,6 @@
 package com.leonwang.app.chinashop.ui.fragment.itemFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.leonwang.app.chinashop.base.RxLazyBaseFragment;
 import com.leonwang.app.chinashop.entity.TopNewsEntity;
 import com.leonwang.app.chinashop.iml.SwipeItemCallback;
 import com.leonwang.app.chinashop.net.RetrofitHelper;
+import com.leonwang.app.chinashop.ui.activity.NewsDetailActivity;
 import com.leonwang.app.chinashop.utils.ConstantUtils;
 import com.leonwang.app.chinashop.utils.LayoutHelper;
 import com.leonwang.app.chinashop.utils.LogUtils;
@@ -96,7 +98,11 @@ public class NewsItemFragment extends RxLazyBaseFragment {
         mTopNewsAdapter = new TopNewsAdapter(getApplicationContext(), new SwipeItemCallback<TopNewsEntity.ResultEntity.DataEntity>() {
             @Override
             public void callback(View view, int position, TopNewsEntity.ResultEntity.DataEntity dataEntity) {
-
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("news_detail",dataEntity);
+                Intent intent = new Intent(getSupportActivity(), NewsDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 

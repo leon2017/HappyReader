@@ -68,7 +68,7 @@ public abstract class RxAppCompatBaseActivity extends RxAppCompatActivity {
      * @param on
      */
     @TargetApi(19)
-    private void setTranslucentStatus(boolean on) {
+    public void setTranslucentStatus(boolean on) {
         Window w = this.getWindow();
         WindowManager.LayoutParams params = w.getAttributes();
         if (on) {
@@ -116,7 +116,8 @@ public abstract class RxAppCompatBaseActivity extends RxAppCompatActivity {
     public class MainHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+//            super.handleMessage(msg);
+            onHandlerMessage(msg);
         }
     }
 

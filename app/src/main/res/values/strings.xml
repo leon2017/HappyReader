@@ -5,7 +5,8 @@
     <string name="reload">重新加载</string>
 
 
-
+    <!-- 共享过度动画 -->
+    <string name="transition_photos">transition_animation_news_photos</string>
     <string name="network_unable">网络不可用</string>
     <string name="sd_unable">SD卡不可用</string>
 
@@ -71,6 +72,9 @@
     <string name="activity_home_yesterday_weather">昨日天气 %1$s %2$s° ~ %3$s°</string>
     <string name="custom_sun_view_str_sunrise">日出 %1$s</string>
     <string name="custom_sun_view_str_sunset">日落 %1$s</string>
+    <string name="share_contents">来自「悦读」的分享：%1$s %2$s</string>
+    <string name="share">分享</string>
+    <string name="news_from">%1$s %2$s</string>
 
 
 </resources>
