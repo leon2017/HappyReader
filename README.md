@@ -1,4 +1,4 @@
-# ChinaShop
+# HappyReader
 
 个人爱好写的第一款app，基于 Material Design + MVC+ RxJava + Retrofit + Glide，基本涵盖了当前 Android 端开发最常用的主流框架。
 
