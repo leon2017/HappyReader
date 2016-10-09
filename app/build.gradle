@@ -25,7 +25,7 @@ android {
         release {
             // 不显示Log
             buildConfigField "boolean", "LOG_DEBUG", "false"
-            minifyEnabled false
+            minifyEnabled true;
             // 移除无用的resource文件
             shrinkResources false
             //签名
