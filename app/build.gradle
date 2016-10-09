@@ -39,7 +39,7 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def fileName = outputFile.name.replace(".apk", "weiyue-${defaultConfig.versionName}.apk")
+                def fileName = outputFile.name.replace("app-release.apk", "weiyue-${defaultConfig.versionName}.apk")
                 output.outputFile = new File(outputFile.parent, fileName)
             }
         }
@@ -61,6 +61,11 @@ android {
         arguments {
             eventBusIndex "com.leonwang.app.chinashop.MyEventBusIndex"
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
